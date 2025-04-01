@@ -34,13 +34,14 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQuery�
   <img src="doc/ERD_設計図_日本語版.png" width="700"/>
 </div>
 
-## 👥 チーム構成（Team）
-- リーダー: John（プロジェクト管理・DB設計）
-- Aさん（UI設計・ログイン機能）
-- Bさん（商品表示・レビュー）
-- Cさん（Q&A・管理者画面）
+<h2 align="left"><span style="color:teal;"> 👥 チーム構成（Team）</span></h2>
+<li> イ ジンヒョン (チームリーダー) : デザイン, データベース, FAQ/商品/アドミン ページ </li>
+<li> グォン セッビョル(チーム員) : お問い合わせ, カート/購買ページ </li>
+<li> シン ヨンリョル(チーム員) : デザイン,データベース,お問い合わせ, 会員ページ </li>
+<li> イ フェイエ(チーム員) : レビュー, カート/購買ページ </li>
+<li> イム チャンヒョク(チーム員) : お知らせ, 会員ページ、ログインロジック作成 </li>
 
-## 🧠 学び・成果（What I Learned）
+<h2 aligh="left"><span style="color:teal; font-style:bold;"> 🧠 学び・成果（What I Learned）</span></h2>
 - 実際のチーム開発での役割分担や責任感を経験
 - ER図とテーブル構造の理解がプロジェクト成功に不可欠だと実感
 - JavaとSQLの連携についての理解が深まった
