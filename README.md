@@ -6,12 +6,13 @@
 初めてチームで取り組んだプロジェクトであり、多くの学びと成長が得られました。
 </blockquote>
 
-<h3>📌 概要</h3>
-<span style="color: gray;">Java / JSP / MySQL を用いたチーム型Web開発プロジェクトです。</span>
-## 📌 概要（Project Overview）
+<blockquote>
+<span style="color: gray;">
 チームで初めて取り組んだWebショッピングモールのプロジェクトです。
-Javaをベースにしたバックエンドと、HTML/CSS/JavaScriptを使ったフロントエンドで構成されています。
-<!--
+Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQueryを使ったフロントエンドで構成されたチーム型Web開発プロジェクトです。
+</span>
+</blockquote>
+  <!--
 ## 🛠 使用技術（Tech Stack）
 - Java 11
 - JSP / Servlet
