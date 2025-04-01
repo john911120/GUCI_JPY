@@ -13,7 +13,7 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQuery�
 </span>
 </blockquote>
 
-<h2 align="center"><span style="color:teal;">🛠 使用技術(Tech Stack) </span></h2>
+<h2 align="left"><span style="color:teal;">🛠 使用技術(Tech Stack) </span></h2>
 <li> Java8 </li>
 <li> Oracle Database </li>
 <li> HTML / CSS / JavaScript </li>
@@ -21,13 +21,13 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQuery�
 <li> Spring Framework5 / Spring Security </li>
 <li> Apache Tomcat 9.0 </li>
 
-## 🗂 機能一覧（Main Features）
-- ユーザー登録・ログイン機能
-- 商品一覧・詳細表示
-- カート・購入処理
-- お気に入り（찜하기）管理機能
-- レビュー・Q&A登録機能
-- 管理者ページ（商品登録・修正・削除）
+<h2 align="left"><span style="color:teal;">🗂 機能一覧（Main Features）</span></h2> 
+<li> ユーザー登録・ログイン機能　</li>
+<li> 商品一覧・詳細表示 </li>
+<li> カート・購入処理 </li>
+<li> お気に入り（찜하기）管理機能 </li>
+<li> レビュー・Q&A登録機能 </li>
+<li> 管理者ページ（商品登録・修正・削除）</li>
 
 <h3>🖼 ER図</h3>
 <div align="center">
