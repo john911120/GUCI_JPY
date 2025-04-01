@@ -5,7 +5,7 @@
 </blockquote>
 
 <blockquote>
-<span style="color: gray;">
+<span style="color: white;">
 チームで初めて取り組んだWebショッピングモールのプロジェクトです。
 Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQueryを使ったフロントエンドで構成されたチーム型Web開発プロジェクトです。
 </span>
