@@ -41,7 +41,7 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQuery�
 <li> イ フェイエ(チーム員) : レビュー, カート/購買ページ </li>
 <li> イム チャンヒョク(チーム員) : お知らせ, 会員ページ、ログインロジック作成 </li>
 
-<h2 aligh="left"><span style="color:teal;">🧠</span> <strong>学び・成果（What I Learned）</strong></h2>
+<h2 aligh="left"><span style="color:teal;"><strong>🧠 学び・成果（What I Learned）</strong></span></h2>
 <li><strong>実際のチーム開発での役割分担や責任感を経験</strong></li>
 <li><strong>ER図とテーブル構造の理解がプロジェクト成功に不可欠だと実感</strong></li>
 <li><strong>JavaとSQLの連携についての理解が深まった</strong></li>
