@@ -1,14 +1,14 @@
 <h2 align="left"><span style="color: teal;">🛒 GUCI ショッピングモール プロジェクト</span></h2>
 
 <blockquote>
-初めてチームで取り組んだプロジェクトであり、多くの学びと成長が得られました。
+**初めてチームで取り組んだプロジェクトであり、多くの学びと成長が得られました。**
 </blockquote>
 
 <blockquote>
-<span style="color: white;">
+**
 チームで初めて取り組んだWebショッピングモールのプロジェクトです。
 Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQueryを使ったフロントエンドで構成されたチーム型Web開発プロジェクトです。
-</span>
+**
 </blockquote>
 
 <h2 align="left"><span style="color:teal;">🛠 使用技術(Tech Stack) </span></h2>
