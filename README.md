@@ -13,7 +13,7 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQuery�
 </span>
 </blockquote>
 
-<h2 align="center"><span style="color:teal;">🛠 使用技術（Tech Stack</span></h2>
+<h2 align="center"><span style="color:teal;">🛠 使用技術（Tech Stack) </span></h2>
 <li> Java8 </li>
 <li> Oracle Database </li>
 <li> HTML / CSS / JavaScript </li>
