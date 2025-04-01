@@ -14,12 +14,12 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQuery�
 </blockquote>
 
 <h2 align="center"><span style="color:teal;">🛠 使用技術（Tech Stack</span></h2>
-<li> Testcode1 </li>
-- Java 11
-- JSP / Servlet
-- HTML / CSS / JavaScript
-- MySQL
-- Apache Tomcat
+<li> Java8 </li>
+<li> Oracle Database </li>
+<li> HTML / CSS / JavaScript </li>
+<li> JQuery/ Bootstrap3.3.7 + 4 / JSP / Servlet </li>
+<li> Spring Framework5 / Spring Security </li>
+<li> Apache Tomcat 9.0 </li>
 
 ## 🗂 機能一覧（Main Features）
 - ユーザー登録・ログイン機能
