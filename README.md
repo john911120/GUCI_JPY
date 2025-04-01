@@ -1,18 +1,24 @@
 # GUCI_JPY
-<!--
-# GUCI ショッピングモール プロジェクト
 
+<h2 align="center"><span style="color: teal;">🛒 GUCI ショッピングモール プロジェクト</span></h2>
+
+<blockquote>
+初めてチームで取り組んだプロジェクトであり、多くの学びと成長が得られました。
+</blockquote>
+
+<h3>📌 概要</h3>
+<span style="color: gray;">Java / JSP / MySQL を用いたチーム型Web開発プロジェクトです。</span>
 ## 📌 概要（Project Overview）
 チームで初めて取り組んだWebショッピングモールのプロジェクトです。
 Javaをベースにしたバックエンドと、HTML/CSS/JavaScriptを使ったフロントエンドで構成されています。
-
+<!--
 ## 🛠 使用技術（Tech Stack）
 - Java 11
 - JSP / Servlet
 - HTML / CSS / JavaScript
 - MySQL
 - Apache Tomcat
-
+-->
 ## 🗂 機能一覧（Main Features）
 - ユーザー登録・ログイン機能
 - 商品一覧・詳細表示
@@ -21,8 +27,10 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScriptを使った
 - レビュー・Q&A登録機能
 - 管理者ページ（商品登録・修正・削除）
 
-## 🖼 ER図（ER Diagram）
-![ERD](doc/ERD_設計図_日本語版.png)
+<h3>🖼 ER図</h3>
+<div align="center">
+  <img src="doc/ERD_設計図_日本語版.png" width="700"/>
+</div>
 
 ## 👥 チーム構成（Team）
 - リーダー: John（プロジェクト管理・DB設計）
@@ -36,20 +44,13 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScriptを使った
 - JavaとSQLの連携についての理解が深まった
 
 ## 📎 その他（Others）
-- チーム開発期間: 202X年X月 ～ 202X年X月
+- チーム開発期間: 2021年1月 ～ 2021年2月
 - 提出目的: 日本企業へのポートフォリオ用
--->
 
-<h2 align="center"><span style="color: teal;">🛒 GUCI ショッピングモール プロジェクト</span></h2>
 
-<blockquote>
-初めてチームで取り組んだプロジェクトであり、多くの学びと成長が得られました。
-</blockquote>
 
-<h3>📌 概要</h3>
-<span style="color: gray;">Java / JSP / MySQL を用いたチーム型Web開発プロジェクトです。</span>
 
-<h3>🖼 ER図</h3>
-<div align="center">
-  <img src="doc/ERD_設計図_日本語版.png" width="700"/>
-</div>
+
+
+
+
