@@ -12,14 +12,15 @@
 Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQueryを使ったフロントエンドで構成されたチーム型Web開発プロジェクトです。
 </span>
 </blockquote>
-  <!--
-## 🛠 使用技術（Tech Stack）
+
+<h2 align="center"><span style="color:teal;">🛠 使用技術（Tech Stack</span></h2>
+<li> Testcode1 </li>
 - Java 11
 - JSP / Servlet
 - HTML / CSS / JavaScript
 - MySQL
 - Apache Tomcat
--->
+
 ## 🗂 機能一覧（Main Features）
 - ユーザー登録・ログイン機能
 - 商品一覧・詳細表示
