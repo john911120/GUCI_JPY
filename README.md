@@ -1,0 +1,1 @@
+# GUCI_JPY
