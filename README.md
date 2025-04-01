@@ -42,7 +42,7 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQuery�
 <li> イム チャンヒョク(チーム員) : お知らせ, 会員ページ、ログインロジック作成 </li>
 
 <h2 aligh="left"><span style="color:teal;">🧠</span> **学び・成果（What I Learned）**</h2>
-**実際のチーム開発での役割分担や責任感を経験**
+<li><strong>実際のチーム開発での役割分担や責任感を経験</strong></li>
 **ER図とテーブル構造の理解がプロジェクト成功に不可欠だと実感**
 **JavaとSQLの連携についての理解が深まった**
 
