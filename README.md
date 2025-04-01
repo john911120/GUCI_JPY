@@ -1,6 +1,4 @@
-# GUCI_JPY
-
-<h2 align="center"><span style="color: teal;">🛒 GUCI ショッピングモール プロジェクト</span></h2>
+<h2 align="left"><span style="color: teal;">🛒 GUCI ショッピングモール プロジェクト</span></h2>
 
 <blockquote>
 初めてチームで取り組んだプロジェクトであり、多くの学びと成長が得られました。
@@ -46,9 +44,9 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQuery�
 <li><strong>ER図とテーブル構造の理解がプロジェクト成功に不可欠だと実感</strong></li>
 <li><strong>JavaとSQLの連携についての理解が深まった</strong></li>
 
-## 📎 その他（Others）
-- チーム開発期間: 2021年1月 ～ 2021年2月
-- 提出目的: 日本企業へのポートフォリオ用
+<h2 aligh="left"><span style="color:teal;"> 📎 その他（Others）</span></h2>
+<li> チーム開発期間: 2021年1月 ～ 2021年2月</li>
+<li> 提出目的: 日本企業へのポートフォリオ用</li>
 
 
 
