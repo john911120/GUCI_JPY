@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.guci.mapper.UserMapper">
+ 	<!-- メンバー加入 -->
+	<insert id="userJoin">
+	 insert into guci_user values(#{userId}, #{userPw}, #{userName}, #{userPhone}, #{userEmail}, #{userAddr1}, #{userAddr2}, #{userAddr3}, sysdate,0,0)
+	</insert>
+
+	<!-- ID重複チェック -->
+  	<select id="idCheck" resultType="int">
+  		select count(*) from guci_user where userId = #{userId}
+  	</select>
+  	
+	<!-- ログイン -->
+     <select id="userLogin" resultType="com.guci.domain.UserVO">
+         select userId, userPw ,userName from guci_user where userId = #{userId}
+     </select>
+     
+	<!-- ID 探し -->
+	<select id="searchId" resultType="com.guci.domain.UserVO">
+		 SELECT userId from guci_user WHERE userName=#{userName} and userPhone=#{userPhone} 
+	 </select>
+	 
+ 	<!-- メールアドレス 探し(パスワード) -->
+	<select id="findEmail" parameterType="String" resultType="String">
+		select userEmail from guci_user where userId =#{userId}
+	</select>
+
+	<!-- パスワード 探し(臨時パスワードアップデート) -->
+	<update id="updatePw">
+		update guci_user set userPw = #{userPw} where userId = #{userId}
+	</update>
+
+	<!-- メンバーのパスワードデータを持ってくる。 -->
+     <select id="userPw" resultType="String">
+     	SELECT userPw FROM guci_user WHERE userId = #{userId}
+     </select>
+     
+     <!-- メンバーの情報を持ってくる -->
+     <select id="user" resultType="com.guci.domain.UserVO">
+     	SELECT * FROM guci_user WHERE userId = #{userId}
+     </select>
+     
+     <!-- メンバー情報更新 -->
+     <update id="updateInfo">
+     	UPDATE guci_user SET userPw = #{userPw}, userEmail = #{userEmail}, userPhone = #{userPhone}, userAddr1 = #{userAddr1}, userAddr2 = #{userAddr2}, userAddr3 = #{userAddr3}
+     	WHERE userId = #{userId}
+     </update>
+
+     <!-- メンバー脱退 -->     
+     <delete id="delete">
+     	DELETE FROM guci_user WHERE userId = #{userId}
+     </delete>
+ </mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.guci.mapper.NoticeMapper">
+
+  <sql id="criteria">
+     <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+        <foreach item='type' collection="typeArr">
+           <trim prefix="OR">
+              <choose>
+                 <when test="type == 'T'.toString()">
+                    noticeTit like '%'||#{keyword}||'%'
+                 </when>
+                 <when test="type == 'C'.toString()">
+                    noticeCon like '%'||#{keyword}||'%'
+                 </when>
+                 <when test="type == 'W'.toString()">
+                    noticeWri like '%'||#{keyword}||'%'
+                 </when>
+              </choose>
+           </trim>
+        </foreach>
+     </trim>
+  </sql>
+
+<select id="getList" resultType="com.guci.domain.NoticeVO">
+<![CDATA[ select * from guci_notice where noticeNo > 0 ]]>
+</select>
+
+<!-- お知らせの掲示記事を追加する。 -->
+<insert id="insert">
+     insert into guci_notice(noticeNo, noticeTit, noticeCon, noticeWri)
+     values(seq_notice.nextval, #{noticeTit}, #{noticeCon}, #{noticeWri})
+  </insert>
+ 
+<!-- お知らせの掲示番号を使って記事を追加する。 -->  
+  <insert id="insertSelectKey">
+     <selectKey keyProperty="noticeNo" order="BEFORE" resultType="long">
+        select seq_notice.nextval from dual
+     </selectKey>
+  
+    insert into guci_notice(noticeNo, noticeTit, noticeCon, noticeWri)
+     values(#{noticeNo}, #{noticeTit}, #{noticeCon}, #{noticeWri})
+  </insert>
+
+<!--  Read 처리 -->
+   <select id="read" resultType="com.guci.domain.NoticeVO">
+      select * from guci_notice where noticeNo = #{noticeNo}
+   </select>
+   
+ <!-- Delete 처리 -->
+  <delete id="delete">
+     delete guci_notice where noticeNo = #{noticeNo}
+  </delete>    
+  
+   <!-- Update 처리 -->
+  <update id="update">
+     update guci_notice
+     set noticeTit = #{noticeTit}, noticeCon = #{noticeCon}, noticeWri=#{noticeWri}, noticeDate = sysdate
+     where noticeNo = #{noticeNo}
+  </update>
+  
+     <select id="getListWithPaging" resultType="com.guci.domain.NoticeVO">
+  <![CDATA[ 
+  select
+   noticeNo, noticeTit, noticeCon, noticeWri, noticeDate
+  from 
+     ( select /*+INDEX_DESC(guci_notice) */
+       rownum rn, noticeNo, noticeTit, noticeCon, noticeWri, noticeDate
+       from guci_notice
+       where 
+ ]]>
+   <trim prefix="(" suffix=")AND " prefixOverrides="OR">
+   <foreach item='type' collection="typeArr">
+   <trim prefix="OR">
+   <choose>
+   <when test="type =='T'.toString()" >
+      noticeTit like '%' ||#{keyword}||'%'
+   </when>
+   <when test="type =='C'.toString()" >
+      noticeTit like '%' ||#{keyword}||'%'
+   </when>
+   <when test="type =='W'.toString()" >
+      noticeTit like '%' ||#{keyword}||'%'
+   </when>
+   </choose>
+   </trim>
+   </foreach>
+   </trim>
+  <![CDATA[ 
+     rownum <= #{pageNum} * #{amount}
+     )
+     where rn > (#{pageNum} -1) * #{amount}
+  ]]>
+  </select>
+  
+    <select id="getTotalCount" resultType="int">
+     select count(*) from guci_notice where
+     <include refid="criteria"></include>
+      noticeNo > 0
+  </select>
+</mapper>

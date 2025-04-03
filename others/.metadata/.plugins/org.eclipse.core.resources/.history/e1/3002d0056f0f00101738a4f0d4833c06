@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <!-- P553  -->
+<mapper namespace="com.guci.mapper.QuesAttachMapper">
+	<insert id="insert">
+	insert into guci_question_attach (uuid, uploadpath, filename, filetype, quesNo)
+	values (#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{quesNo})
+	</insert>
+  
+  	<delete id="delete">
+  		delete from guci_question_attach where uuid = #{uuid}
+  	</delete>
+  	
+  	<select id="findByquesNo" resultType="com.guci.domain.QuesAttachVO">
+  	select * from guci_question_attach where quesNo = #{quesNo}
+  	</select>
+  	
+  	<!--  添付ファイルを削除する -->
+  	<delete id="deleteAll">
+  		delete from guci_question_attach where quesNo = #{quesNo}
+  	</delete>
+  	
+	<!-- 一日前にアップロードされた商品イメージデータを照会する。 -->
+  	<select id="getOldFiles" resultType="com.guci.domain.QuesAttachVO">
+  		select * from guci_question_attach where uploadpath = to_char(sysdate -1, 'yyyy/mm/dd')
+  	</select>
+</mapper>

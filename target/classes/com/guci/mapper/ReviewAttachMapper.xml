@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.guci.mapper.ReviewAttachMapper">
+   <!-- レビューイメージを追加する。-->
+  	<insert id="insert">
+  		INSERT INTO reviewImg (uuid, uploadPath, fileName, fileType, revNo)
+  		VALUES (#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{revNo})
+  	</insert>
+  	
+  	   <!-- レビューイメージを削除する。-->
+  	<delete id="delete">
+  		DELETE FROM reviewImg WHERE uuid = #{uuid}
+  	</delete>
+  	
+  	<!-- レビュー番号を使ってレビューイメージを検索する。-->
+  	<select id="findByRevNo" resultType="com.guci.domain.ReviewAttachVO">
+  		SELECT * FROM reviewImg WHERE revNo = #{revNo}
+  	</select>
+
+  	   <!-- レビューイメージを全部削除する。-->  	   
+	<delete id="deleteAll">
+		DELETE reviewImg WHERE revNo = #{revNo}
+	</delete>  	
+	
+	<!-- 一日前にアップロードされた商品イメージデータを照会する。 -->
+	<select id="getOldFiles" resultType="com.guci.domain.ReviewAttachVO">
+		SELECT * FROM reviewImg WHERE uploadPath = to_char(SYSDATE -1, 'yyyy\mm\dd')
+	</select>
+  </mapper>

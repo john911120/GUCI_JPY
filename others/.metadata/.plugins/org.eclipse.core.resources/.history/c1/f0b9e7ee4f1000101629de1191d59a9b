@@ -1,0 +1,22 @@
+package com.guci.domain;
+
+import java.util.Date;
+
+import lombok.Data;
+
+@Data
+public class MemberListVO {
+	private String userId;
+	
+	private String userName;
+	
+	private int orderNum;
+	
+	private int orderPrice;
+	
+	private Date regDate;
+	
+	private Long stock;
+	
+	private Long sum;
+}

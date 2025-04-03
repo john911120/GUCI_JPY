@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.guci.mapper.QuesMapper">
+
+
+ <!-- セレックボックスでどのよう分野で検索するかを選択したときにその条件を動的に構成するためのロジック -->
+  <sql id="criteria">
+  	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+  		<foreach item='type' collection="typeArr">
+  			<trim prefix="OR">
+  				<choose>
+  					<when test="type == 'T'.toString()">
+  						quesTit like '%'||#{keyword}||'%'
+  					</when>
+  					<when test="type == 'C'.toString()">
+  						quesCon like '%'||#{keyword}||'%'
+  					</when>
+  					<when test="type == 'W'.toString()">
+  						quesWri like '%'||#{keyword}||'%'
+  					</when>
+  				</choose>
+  			</trim>
+  		</foreach>
+  	</trim>
+  </sql>
+
+	<!-- 問い合わせの記事リストを読み込む -->	
+  <select id="getlist" resultType="com.guci.domain.QuesVO">
+  <![CDATA[ select * from guci_question where quesNo > 0 ]]>
+  </select>
+
+	<!-- 問い合わせの記事を追加する。 -->	
+  <insert id="insert">
+  	insert into guci_question(quesNo, quesTit, quesCon, quesWri,quesCateCode)
+  	values(seq_guciquestion.nextval, #{quesTit}, #{quesCon}, #{quesWri},#{quesCateCode})
+  </insert>
+  
+  <insert id="insertSelectKey">
+  	<selectKey keyProperty="quesNo" order="BEFORE" resultType="long">
+  		select seq_guciquestion.nextval from dual
+  	</selectKey>
+  
+    insert into guci_question(quesNo, quesTit, quesCon, quesWri,quesCateCode)
+  	values(#{quesNo}, #{quesTit}, #{quesCon}, #{quesWri},#{quesCateCode})
+  </insert>
+  
+  
+	<!-- 問い合わせの記事を読み込む -->	
+	<select id="read" resultType="com.guci.domain.QuesVO">
+		select * from guci_question where quesNo = #{quesNo}
+	</select>
+	
+  <!-- 問い合わせの記事を削除 -->
+  <delete id="delete">
+  	delete guci_question where quesNo = #{quesNo}
+  </delete>  
+  
+  <!-- 問い合わせの記事を更新する -->
+  <update id="update"  parameterType ="com.guci.domain.QuesVO">
+  	update guci_question
+  	set quesTit = #{quesTit}, quesCon = #{quesCon}, quesWri=#{quesWri},quesCateCode=#{quesCateCode}
+  	where quesNo = #{quesNo}
+  </update>
+  
+   <!-- 問い合わせのページング処理 -->
+   <select id="getListWithPaging" resultType="com.guci.domain.QuesVO">
+  <![CDATA[ 
+  select
+   quesNo, quesTit, quesCon, quesWri, quesDate, replycnt,quesCateCode
+  from 
+  	( select /*+INDEX_DESC(guci_question) */
+  	  rownum rn, quesNo, quesTit, quesCon, quesWri, quesDate, quesCateCode,replycnt
+  	  from guci_question
+  	  where 
+  ]]>
+	<include refid="criteria"></include>
+  <![CDATA[ 
+  	rownum <= #{pageNum} * #{amount}
+  	)
+  	where rn > (#{pageNum} -1) * #{amount}
+  ]]>
+  </select>
+  
+  
+
+  <select id="getTotalCount" resultType="int">
+  	select count(*) from guci_question where
+  	<include refid="criteria"></include>
+  	 quesNo > 0
+  </select>
+  
+	
+  <!-- 問い合わせの記事をコメントの数を更新する -->
+  <update id="updateReplyCnt">
+  	update guci_question set replyCnt = replyCnt + #{amount} where quesNo = #{quesNo}
+  </update>
+  
+</mapper>

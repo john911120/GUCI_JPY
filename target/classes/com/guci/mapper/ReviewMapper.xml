@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.guci.mapper.ReviewMapper">
+  	<!-- レビュー記事のリストを照会する。 -->
+  	<select id="getList" resultType="com.guci.domain.ReviewVO">
+  		<![CDATA[
+  		select * from review where revNo>0 AND gdsNo = #{gdsNo}]]>
+  	</select>
+<!--   	<select id="getList" resultType="com.guci.domain.ReviewVO">
+  		<![CDATA[
+  		select * from review where revNo>0]]>
+  	</select> -->
+  	
+  	<!-- レビュー記事のリストを追加する。 -->
+  	<insert id="insert">
+  		insert into review(revNo,gdsNo, gdsName, userId, revCon, score) values(seq_review.nextval,#{gdsNo},#{gdsName},#{userId},#{revCon},#{score})
+  	</insert>
+  	<insert id="insertSelectKey">
+  		<selectKey keyProperty="revNo" order="BEFORE" resultType="long">
+  			select seq_review.nextval from dual
+  		</selectKey>
+  		insert into review(revNo,gdsNo, gdsName, userId, revCon, score) values(#{revNo},#{gdsNo},#{gdsName},#{userId},#{revCon},#{score})		
+  	</insert>
+  	
+  	<!-- レビュー記事のリストを読み込む -->
+  	<select id="read" resultType="com.guci.domain.ReviewVO">
+  		select * from review where revNo=#{revNo}
+  	</select>
+  	
+  	<!-- レビュー記事のリストを削除する -->
+  	<delete id="delete">
+  		delete from review where revNo=#{revNo}
+  	</delete>
+  	
+  	<!-- レビュー記事のリストを更新する -->
+  	<update id="update">
+  		update review
+  		set gdsNo = #{gdsNo},
+  		 gdsName = #{gdsName},
+  		 userId = #{userId},
+  		 revCon = #{revCon},
+  		 score = #{score},
+  		revDate=sysdate
+  		where revNo=#{revNo}
+  	</update>
+  	
+  	<!-- レビューイメージのページング処理 -->
+  	<select id="getListWithPaging" resultType="com.guci.domain.ReviewVO">
+  	<![CDATA[
+  		select revNo,gdsNo, gdsName, userId, revCon, score, revDate
+  		from 
+  			(
+  			 select /*+INDEX_DESC(review  pk_review)*/ rownum rn, revNo, gdsNo, gdsName, userId, revCon, score, revDate from review where rowNum<=#{pageNum}*#{amount}
+  			 )where rn>(#{pageNum}-1)*#{amount} ]]>
+  	</select>
+  	<select id="getTotalCount" resultType="int"> 
+  		select count(*) from review where revNo>0 AND gdsNo = #{gdsNo}
+  	</select>
+  
+    <select id="getListImgWithPaging" resultType="com.guci.domain.ReviewImgUserVO">
+    <![CDATA[
+    	SELECT revNo, gdsNo, gdsName, revCon, revDate, score, uuid, uploadPath, fileName, fileType, userId
+    	FROM ( SELECT /*+INDEX_DESC(review  pk_review)*/ rownum rn, r.revNo, r.gdsNo, r.gdsName, r.revCon, r.revDate, r.score, i.uuid, i.uploadPath, i.fileName, i.fileType, u.userId FROM review r, reviewImg i, guci_user u WHERE r.revNo = i.revNo AND r.userId = u.userId
+    	   AND ROWNUM <= #{pageNum}*#{amount} AND gdsNo = #{gdsNo}) 
+    	WHERE rn > (#{pageNum} -1) * #{amount} 
+    ]]>
+    </select>
+  </mapper>

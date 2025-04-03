@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guci.mapper.OrderMapper">
+	<!-- 注文情報を追加する。 -->
+	<insert id="insertInfo">
+		INSERT INTO guci_orderInfo VALUES(#{userId}, #{orderRec}, #{orderAddr1}, #{orderAddr2}, #{orderAddr3}, #{orderPhone})
+	</insert>
+	
+	<insert id="orderInsert">
+		INSERT INTO guci_order (orderId, userId, orderRec, orderAddr1, orderAddr2, orderAddr3, orderPhone, cartStock, gdsName, gdsNo)
+			SELECT seq_guci_order.NEXTVAL, c.userId, i.orderRec, i.orderAddr1, i.orderAddr2, i.orderAddr3, i.orderPhone, c.cartStock, c.gdsName, c.gdsNo
+			FROM guci_cart c, guci_orderInfo i
+			WHERE c.userId = i.userId AND c.userId=#{userId}
+	</insert>
+	
+	<!-- 注文情報を削除する -->
+	<delete id="deleteInfo">
+		DELETE FROM guci_orderInfo WHERE userId=#{userId}
+	</delete>
+	
+	<!-- カトーに入れている物を全部削除する。-->
+	<delete id="cartAllDelete">
+		DELETE guci_cart WHERE userId = #{userId}
+	</delete>
+	
+	<!-- 使用者の総金額の値段をアップデートする。 -->
+	<update id="updateUser">
+		UPDATE guci_user 
+		SET sum =
+		    (SELECT SUM(g.gdsPrice*o.cartStock) AS sum
+		    FROM guci_goods g, guci_order o
+		    WHERE g.gdsNo = o.gdsNo AND o.userId=#{userId})
+		, stock=
+		    (SELECT COUNT(o.cartStock) AS stock
+		    FROM guci_order o
+		    WHERE o.userId=#{userId})
+		WHERE userId=#{userId}
+	</update>
+</mapper>
+

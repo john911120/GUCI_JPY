@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guci.mapper.FaqMapper">
+	<!-- 問い合わせ掲示板の記事を照会する。 -->
+	<select id="getList" resultType="com.guci.domain.FaqVO">
+		<![CDATA[
+			SELECT * FROM guci_faq WHERE faqNo > 0
+		]]>
+	</select>
+	
+	<!-- 問い合わせの掲示板に新しい記事を追加する。 -->	
+	<insert id="insert">
+		INSERT INTO guci_faq(faqNo, faqCate, faqTit, faqCon, faqWri)
+		VALUES(seq_faq.NEXTVAL, #{faqCate},#{faqTit},#{faqCon},'admin')
+	</insert>
+	
+	<!-- 問い合わせの掲示板の番号を確認し、その番号で新しい記事を追加する。 -->	
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="faqNo" order="BEFORE" resultType="long">
+			SELECT seq_faq.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO guci_faq(faqNo, faqCate, faqTit, faqCon, faqWri)
+		VALUES(#{faqNo}, #{faqCate},#{faqTit},#{faqCon},'admin')
+	</insert>
+	
+	<!-- 問い合わせの掲示板の番号を使って記事を照会する。 -->
+	<select id="read" resultType="com.guci.domain.FaqVO">
+		SELECT * FROM guci_faq WHERE faqNo = #{faqNo}
+	</select>
+	
+	<!-- 問い合わせの掲示板の番号を使って記事を削除する。 -->
+	<delete id="delete">
+		DELETE FROM guci_faq WHERE faqNo = #{faqNo}
+	</delete>
+	
+	<!-- 問い合わせの掲示板の番号を使って記事を修正する。 -->
+	<update id="update">
+		UPDATE guci_faq SET faqCate = #{faqCate}, faqTit = #{faqTit}, faqCon = #{faqCon}
+		WHERE faqNo = #{faqNo} 
+	</update>
+</mapper>
+

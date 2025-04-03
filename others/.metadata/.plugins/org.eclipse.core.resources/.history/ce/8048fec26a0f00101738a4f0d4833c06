@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guci.mapper.GoodsMapper">
+	<!-- 商品リストを照会する。 -->
+	<select id="getList_goods" resultType="com.guci.domain.GoodsListVO">
+	<![CDATA[
+		SELECT g.gdsNo, g.gdsName, g.gdsPrice, g.gdsDes, g.gdsSize, g.gdsDate, g.gdsViews, g.cateCode, c.cateName, c.cateCodeRef		
+		 FROM guci_goods g, goods_category c
+		  WHERE g.cateCode = c.cateCode AND gdsNo > 0
+	]]>
+	</select>
+	<!-- 商品を追加する。 -->
+	<insert id="insert_goods">
+		INSERT INTO guci_goods(gdsNo, gdsName, gdsPrice, gdsDes, gdsSize, cateCode)
+		VALUES(seq_guci_goods.NEXTVAL, #{gdsName}, #{gdsPrice}, #{gdsDes}, #{gdsSize}, #{cateCode})
+	</insert>
+	
+	<!-- 商品番号を使って、商品を追加する。-->
+	<insert id="insertSelectKey_goods">
+		<selectKey keyProperty="gdsNo" order="BEFORE" resultType="long">
+			SELECT seq_guci_goods.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO guci_goods(gdsNo, gdsName, gdsPrice, gdsDes, gdsSize, cateCode)
+		VALUES(#{gdsNo}, #{gdsName}, #{gdsPrice}, #{gdsDes}, #{gdsSize}, #{cateCode})
+	</insert>
+	
+	<!-- 商品の情報を読み込む -->
+	<select id="read_goods" resultType="com.guci.domain.GoodsListVO">
+		SELECT g.gdsNo, g.gdsName, g.gdsPrice, g.gdsDes, g.gdsSize, g.gdsDate, g.gdsViews, g.cateCode, c.cateName, c.cateCodeRef		
+		 FROM guci_goods g, goods_category c
+		  WHERE g.cateCode = c.cateCode AND gdsNo =#{gdsNo}
+	</select>
+	
+	<!-- 商品の詳細情報を読み込む[Inner Joinを使用したロジック] -->
+ 	<select id="read_goods_detail" resultType="com.guci.domain.GoodsListAttachVO">
+		SELECT g.gdsNo, g.gdsName, g.gdsPrice, g.gdsDes, g.gdsSize, g.gdsDate, g.gdsViews, g.cateCode, c.cateName, c.cateCodeRef, i.uuid, i.uploadPath, i.fileName, i.fileType		
+		 FROM guci_goods g, goods_category c, goodsImg i
+		  WHERE g.cateCode = c.cateCode AND g.gdsNo = i.gdsNo AND g.gdsNo =#{gdsNo}
+	</select>
+	
+	<!-- 商品の詳細情報を読み込む[Joinを使わないロジック] -->	
+	<select id="read_goods_no_join" resultType="com.guci.domain.GoodsVO">
+		SELECT gdsNo, gdsName, gdsPrice, gdsDes, gdsSize, gdsDate, gdsViews, cateCode	
+		 FROM guci_goods
+		  WHERE gdsNo =#{gdsNo}
+	</select>
+	
+	<!-- 商品番号を使って、商品を削除する。-->
+	<delete id="delete_goods">
+		DELETE FROM guci_goods WHERE gdsNo = #{gdsNo}
+	</delete>
+	
+	<!-- 商品番号を使って、商品情報を更新する。-->
+	<update id="update_goods">
+		UPDATE guci_goods SET gdsName = #{gdsName},gdsPrice = #{gdsPrice},gdsDes = #{gdsDes},gdsSize = #{gdsSize},cateCode = #{cateCode}, gdsDate = SYSDATE
+		WHERE gdsNo = #{gdsNo}
+	</update>
+	
+	<!-- 上位カテゴリーから初めて、下位カテゴリーを再帰的に検索する。 -->
+	<select id="category_goods" resultType="com.guci.domain.CategoryVO">
+		 select
+		  level, cateName, cateCode, cateCodeRef
+		 from goods_category
+		     start with cateCodeRef is null connect by prior cateCode = cateCodeRef
+	</select>
+
+
+
+	<!-- 画面にデータを出力する[ベスト商品] -->
+	<select id="getList_best" resultType="com.guci.domain.GoodsListAttachVO">
+		SELECT g.gdsNo, g.gdsName, g.gdsPrice, g.gdsDes, g.gdsSize, g.gdsDate, g.gdsViews, g.cateCode, c.cateName, c.cateCodeRef, i.uuid, i.uploadPath, i.fileName, i.fileType
+		 FROM guci_goods g, goods_category c, goodsImg i
+		  WHERE g.cateCode = c.cateCode AND g.gdsNo = i.gdsNo 
+		  ORDER BY g.gdsViews DESC
+	</select>
+
+	<!-- 画面にデータを出力する -->
+	<select id="getList_new" resultType="com.guci.domain.GoodsListAttachVO">
+		SELECT g.gdsNo, g.gdsName, g.gdsPrice, g.gdsDes, g.gdsSize, g.gdsDate, g.gdsViews, g.cateCode, c.cateName, c.cateCodeRef, i.uuid, i.uploadPath, i.fileName, i.fileType
+		 FROM guci_goods g, goods_category c, goodsImg i
+		  WHERE g.cateCode = c.cateCode AND g.gdsNo = i.gdsNo 
+		  ORDER BY g.gdsDate DESC
+	</select>
+
+	<select id="getList_man" resultType="com.guci.domain.GoodsListAttachVO">
+		SELECT g.gdsNo, g.gdsName, g.gdsPrice, g.gdsDes, g.gdsSize, g.gdsDate, g.gdsViews, g.cateCode, c.cateName, c.cateCodeRef, i.uuid, i.uploadPath, i.fileName, i.fileType
+		 FROM guci_goods g, goods_category c, goodsImg i
+		  WHERE g.cateCode = c.cateCode AND g.gdsNo = i.gdsNo AND c.cateCodeRef = '100'
+		  ORDER BY g.gdsViews DESC
+	</select>
+
+	<select id="getList_woman" resultType="com.guci.domain.GoodsListAttachVO">
+		SELECT g.gdsNo, g.gdsName, g.gdsPrice, g.gdsDes, g.gdsSize, g.gdsDate, g.gdsViews, g.cateCode, c.cateName, c.cateCodeRef, i.uuid, i.uploadPath, i.fileName, i.fileType
+		 FROM guci_goods g, goods_category c, goodsImg i
+		  WHERE g.cateCode = c.cateCode AND g.gdsNo = i.gdsNo AND c.cateCodeRef = '200'
+		  ORDER BY g.gdsViews DESC
+	</select>
+
+	<select id="getList_unisex" resultType="com.guci.domain.GoodsListAttachVO">
+		SELECT g.gdsNo, g.gdsName, g.gdsPrice, g.gdsDes, g.gdsSize, g.gdsDate, g.gdsViews, g.cateCode, c.cateName, c.cateCodeRef, i.uuid, i.uploadPath, i.fileName, i.fileType
+		 FROM guci_goods g, goods_category c, goodsImg i
+		  WHERE g.cateCode = c.cateCode AND g.gdsNo = i.gdsNo AND c.cateCodeRef = '300'
+		  ORDER BY g.gdsViews DESC
+	</select>
+
+	
+	
+	<!-- 페이징 처리 -->
+<!-- 	<select id="getListWithPaging_best" resultType="com.guci.domain.GoodsListAttachVO">
+		<![CDATA[
+		SELECT gdsNo, gdsName, gdsPrice, gdsDes, gdsSize, gdsDate, gdsViews, cateCode, cateName, cateCodeRef, uuid, uploadPath, fileName, fileType
+		  FROM( SELECT /*+INDEX_DESC(guci_goods pk_guci_goods) */ ROWNUM rn, g.gdsNo, g.gdsName, g.gdsPrice, g.gdsDes, g.gdsSize, g.gdsDate, g.gdsViews, g.cateCode, i.uuid, i.uploadPath, i.fileName, i.fileType, c.cateCodeRef, c.cateName 
+		    FROM guci_goods g, goods_category c, goodsImg i
+		    WHERE g.cateCode = c.cateCode AND g.gdsNo = i.gdsNo AND ROWNUM <= #{pageNum}*#{amount}) 
+		  WHERE rn > (#{pageNum}-1) * #{amount} ORDER BY gdsViews DESC
+		]]>
+	</select> -->
+
+	<sql id="criteria1">
+	  	<trim >
+			<foreach item="type" collection="typeArr">
+			    <trim prefix="AND">
+					<choose>
+						<when test="type == ''.toString()">
+							g.gdsNo > 0
+						</when>
+						<when test="type == '남성'.toString()">
+							c.cateCodeRef = '100'
+						</when>
+						<when test="type == '여성'.toString()">
+							c.cateCodeRef = '200'
+						</when>
+						<when test="type == '공용'.toString()">
+							c.cateCodeRef = '300'
+						</when>
+					</choose>
+			    </trim>
+			</foreach>
+		</trim>
+	</sql>
+
+	<select id="getListWithPaging_best" resultType="com.guci.domain.GoodsListAttachVO">
+		<![CDATA[
+		SELECT gdsNo, gdsName, gdsPrice, gdsDes, gdsSize, gdsDate, gdsViews, cateCode, cateName, cateCodeRef, uuid, uploadPath, fileName, fileType
+		  FROM( SELECT /*+INDEX_DESC(guci_goods pk_guci_goods) */ ROWNUM rn, g.gdsNo, g.gdsName, g.gdsPrice, g.gdsDes, g.gdsSize, g.gdsDate, g.gdsViews, g.cateCode, i.uuid, i.uploadPath, i.fileName, i.fileType, c.cateCodeRef, c.cateName 
+		    FROM guci_goods g, goods_category c, goodsImg i
+		    WHERE g.cateCode = c.cateCode AND g.gdsNo = i.gdsNo
+		 ]]>
+
+		<include refid="criteria1"/>
+		
+		<![CDATA[
+		    AND ROWNUM <= #{pageNum}*#{amount}) 
+		  WHERE rn > (#{pageNum}-1) * #{amount} ORDER BY gdsViews DESC
+		]]>
+	</select>
+
+	<select id="getListWithPaging_new" resultType="com.guci.domain.GoodsListAttachVO">
+		<![CDATA[
+		SELECT gdsNo, gdsName, gdsPrice, gdsDes, gdsSize, gdsDate, gdsViews, cateCode, cateName, cateCodeRef, uuid, uploadPath, fileName, fileType
+		  FROM( SELECT /*+INDEX_DESC(guci_goods pk_guci_goods) */ ROWNUM rn, g.gdsNo, g.gdsName, g.gdsPrice, g.gdsDes, g.gdsSize, g.gdsDate, g.gdsViews, g.cateCode, i.uuid, i.uploadPath, i.fileName, i.fileType, c.cateCodeRef, c.cateName 
+		    FROM guci_goods g, goods_category c, goodsImg i
+		    WHERE g.cateCode = c.cateCode AND g.gdsNo = i.gdsNo
+		]]>
+
+		<include refid="criteria1" />
+
+		<![CDATA[				    
+		     AND ROWNUM <= #{pageNum}*#{amount}) 
+		  WHERE rn > (#{pageNum}-1) * #{amount} ORDER BY gdsDate DESC
+		]]>
+	</select>
+	
+
+	<sql id="criteria2">
+	  	<trim >
+			<foreach item="type" collection="typeArr">
+			    <trim prefix="AND">
+					<choose>
+						<when test="type == '상의'.toString()">
+							MOD(TO_NUMBER(g.cateCode),100) = 1
+						</when>
+						<when test="type == '하의'.toString()">
+							MOD(TO_NUMBER(g.cateCode),100) = 2
+						</when>
+						<when test="type == '아우터'.toString()">
+							MOD(TO_NUMBER(g.cateCode),100) = 3
+						</when>
+						<when test="type == '원피스'.toString()">
+							MOD(TO_NUMBER(g.cateCode),100) = 4
+						</when>
+					</choose>
+			    </trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<select id="getListWithPaging_man" resultType="com.guci.domain.GoodsListAttachVO">
+		<![CDATA[
+		SELECT gdsNo, gdsName, gdsPrice, gdsDes, gdsSize, gdsDate, gdsViews, cateCode, cateName, cateCodeRef, uuid, uploadPath, fileName, fileType
+		  FROM( SELECT /*+INDEX_DESC(guci_goods pk_guci_goods) */ ROWNUM rn, g.gdsNo, g.gdsName, g.gdsPrice, g.gdsDes, g.gdsSize, g.gdsDate, g.gdsViews, g.cateCode, i.uuid, i.uploadPath, i.fileName, i.fileType, c.cateCodeRef, c.cateName 
+		    FROM guci_goods g, goods_category c, goodsImg i
+		    WHERE g.cateCode = c.cateCode AND g.gdsNo = i.gdsNo AND c.cateCodeRef = '100' 
+		]]>
+		
+		<include refid="criteria2" />
+		 
+		<![CDATA[		    
+		    AND ROWNUM <= #{pageNum}*#{amount}) 
+		  WHERE rn > (#{pageNum}-1) * #{amount} ORDER BY gdsViews DESC
+		]]>
+	</select>
+	
+	<select id="getListWithPaging_woman" resultType="com.guci.domain.GoodsListAttachVO">
+		<![CDATA[
+		SELECT gdsNo, gdsName, gdsPrice, gdsDes, gdsSize, gdsDate, gdsViews, cateCode, cateName, cateCodeRef, uuid, uploadPath, fileName, fileType
+		  FROM( SELECT /*+INDEX_DESC(guci_goods pk_guci_goods) */ ROWNUM rn, g.gdsNo, g.gdsName, g.gdsPrice, g.gdsDes, g.gdsSize, g.gdsDate, g.gdsViews, g.cateCode, i.uuid, i.uploadPath, i.fileName, i.fileType, c.cateCodeRef, c.cateName 
+		    FROM guci_goods g, goods_category c, goodsImg i
+		    WHERE g.cateCode = c.cateCode AND g.gdsNo = i.gdsNo AND c.cateCodeRef = '200' 
+		]]>
+		
+		<include refid="criteria2" />
+		 
+		<![CDATA[		    		    
+		    AND ROWNUM <= #{pageNum}*#{amount}) 
+		  WHERE rn > (#{pageNum}-1) * #{amount} ORDER BY gdsViews DESC
+		]]>
+	</select>
+	
+	<select id="getListWithPaging_unisex" resultType="com.guci.domain.GoodsListAttachVO">
+		<![CDATA[
+		SELECT gdsNo, gdsName, gdsPrice, gdsDes, gdsSize, gdsDate, gdsViews, cateCode, cateName, cateCodeRef, uuid, uploadPath, fileName, fileType
+		  FROM( SELECT /*+INDEX_DESC(guci_goods pk_guci_goods) */ ROWNUM rn, g.gdsNo, g.gdsName, g.gdsPrice, g.gdsDes, g.gdsSize, g.gdsDate, g.gdsViews, g.cateCode, i.uuid, i.uploadPath, i.fileName, i.fileType, c.cateCodeRef, c.cateName 
+		    FROM guci_goods g, goods_category c, goodsImg i
+		    WHERE g.cateCode = c.cateCode AND g.gdsNo = i.gdsNo AND c.cateCodeRef = '300' 
+		]]>
+		
+		<include refid="criteria2" />
+		 
+		<![CDATA[		    	    
+		    AND ROWNUM <= #{pageNum}*#{amount}) 
+		  WHERE rn > (#{pageNum}-1) * #{amount} ORDER BY gdsViews DESC
+		]]>
+	</select>
+	
+	
+	
+	
+	<!-- 총 개수 처리 -->
+<!-- 	<select id="getTotalCount_best" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) FROM guci_goods WHERE gdsNo > 0
+		]]>
+	</select> -->
+
+	<select id="getTotalCount_best" resultType="int">
+		SELECT COUNT(*) FROM guci_goods g, goods_category c WHERE g.cateCode = c.cateCode 
+
+		<include refid="criteria1" />
+			AND gdsNo > 0
+	</select>
+
+	<select id="getTotalCount_new" resultType="int">
+		SELECT COUNT(*) FROM guci_goods g, goods_category c WHERE g.cateCode = c.cateCode 
+
+		<include refid="criteria1" />
+			AND gdsNo > 0
+	</select>
+
+<!-- 	<select id="getTotalCount_new" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) FROM guci_goods WHERE gdsNo > 0
+		]]>
+	</select>-->
+	
+	<select id="getTotalCount_man" resultType="int">
+		SELECT COUNT(*) FROM guci_goods g, goods_category c WHERE g.cateCode = c.cateCode 
+		<include refid="criteria2" />
+		AND c.cateCodeRef = '100'	
+	</select>
+<!-- 	<select id="getTotalCount_man" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) FROM guci_goods g, goods_category c WHERE g.cateCode = c.cateCode AND g.gdsNo > 0 AND c.cateCodeRef = '100' 
+		]]>
+	</select> -->
+
+	<select id="getTotalCount_woman" resultType="int">
+		SELECT COUNT(*) FROM guci_goods g, goods_category c WHERE g.cateCode = c.cateCode 
+		<include refid="criteria2" />
+		AND c.cateCodeRef = '200'
+	</select>
+
+	<select id="getTotalCount_unisex" resultType="int">
+		SELECT COUNT(*) FROM guci_goods g, goods_category c WHERE g.cateCode = c.cateCode 
+		<include refid="criteria2" />
+		AND c.cateCodeRef = '300'
+	</select>
+	
+	
+	<!-- 조회수 처리 쿼리문 -->
+	<update id="gdsViews">
+		UPDATE guci_goods SET gdsViews = gdsViews + 1 WHERE gdsNo = #{gdsNo}
+	</update>
+	
+	
+	
+
+	
+	
+	<select id="getListWithPaging_search" resultType="com.guci.domain.GoodsListAttachVO">
+		<![CDATA[
+		SELECT gdsNo, gdsName, gdsPrice, gdsDes, gdsSize, gdsDate, gdsViews, cateCode, cateName, cateCodeRef, uuid, uploadPath, fileName, fileType
+		  FROM( SELECT /*+INDEX_DESC(guci_goods pk_guci_goods) */ ROWNUM rn, g.gdsNo, g.gdsName, g.gdsPrice, g.gdsDes, g.gdsSize, g.gdsDate, g.gdsViews, g.cateCode, i.uuid, i.uploadPath, i.fileName, i.fileType, c.cateCodeRef, c.cateName 
+		    FROM guci_goods g, goods_category c, goodsImg i
+		    WHERE g.cateCode = c.cateCode AND g.gdsNo = i.gdsNo AND ((g.gdsName LIKE '%'||#{keyword}||'%') OR (g.gdsDes LIKE '%'||#{keyword}||'%') OR (c.cateName LIKE '%'||#{keyword}||'%'))
+		    AND ROWNUM <= #{pageNum}*#{amount}) 
+		  WHERE rn > (#{pageNum}-1) * #{amount} ORDER BY gdsViews DESC
+		]]>
+	</select>
+	
+	
+	<select id="getTotalCount_search" resultType="int">
+	SELECT COUNT(*) FROM guci_goods g, goods_category c WHERE g.cateCode = c.cateCode AND
+		((g.gdsName LIKE '%'||#{keyword}||'%') OR (g.gdsDes LIKE '%'||#{keyword}||'%') OR (c.cateName LIKE '%'||#{keyword}||'%')) AND gdsNo > 0
+	</select>
+	
+</mapper>

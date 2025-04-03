@@ -1,0 +1,396 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>商品管理</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="/resources/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/resources/admin/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="/resources/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+	<style type="text/css">
+		.uploadResult{
+			width: 100%; 
+			background-color: gray; 
+		}
+		
+		.uploadResult ul{
+			display: flex; 
+			flex-flow: row; 
+			justify-content: center; /* 水平の位置整列値 設定  */
+			align-items: center; /* 垂直方向位置整列値 設定  */
+		}
+		
+		.uploadResult ul li{
+			list-style: none;
+			padding: 10px;
+			align-content: center;
+			text-align: center;
+		}
+		
+		.uploadResult ul li img{
+			width: 100px;
+		}
+		
+		.uploadResult ul li span{
+		color: white;
+		}
+		
+		.bigPictureWrapper{
+			position: absolute; /*絶対経路*/
+			display: none;
+			justify-content: center;
+			align-items: center;
+			top: 0%;
+			width: 100%;
+			height: 100%;
+			background-color: gray;
+			z-index: 100;
+			background: rgba(255,255,255,0.5);
+		}
+		
+		.bigPicture{
+			position: relative;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		
+		.bigPicture img{
+			width:600px;
+		}
+	</style>
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+	 <jsp:include page="../include/menu.jsp" /> 
+	 
+	         <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+            <!-- Page Heading -->
+            <h1 class="h3 mb-2 text-gray-800">商品登録</h1><br>
+	 
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+					
+						<form role="form" action="/admin/goods/register" method="post" enctype="multipart/form-data">
+							<div class="form-group row">
+							    <label class="col-md-1 col-form-label">分類</label>
+		 				    	<select class="custom-select col-md-1 col-sm-4 category1" style="margin-right:12px; margin-left:12px;" required>
+		 				    		<!-- デフォルトを選択したときに アラットが出るように Javascript処理 -->
+							        <option value="">性別</option>
+						    	</select>
+		 				    	<select class="custom-select col-md-1 col-sm-4 category2" name="cateCode" style="margin-right:10px;" required>
+		 				    		<!-- 性別に合うカテゴリーが出るように設定 -->
+		 				    		<option value="">分類</option>
+		
+						    	</select>
+							</div>
+		
+							  <div class="form-group row">
+							    <label class="col-md-1 col-form-label">商品名</label>
+							      <div class="col-md-6">
+							      <input type="text" name="gdsName" class="form-control" required>
+							    </div>
+							  </div>
+		
+							  <div class="form-group row">
+							    <label class="col-md-1 col-form-label">価格</label>
+							    <div class="col-md-2">
+							      <input type="text" name="gdsPrice" class="form-control" pattern="[0-9]+" required>
+							    </div>
+							 
+							    <label class="col-md-1 col-form-label">サイズ</label>
+							    <div class="col-md-4" style="padding-top:5px;">
+							      <div class="form-check form-check-inline">
+									  <input class="form-check-input" type="checkbox" name="gdsSize" id="sizeS" value="S" checked>
+									  <label class="form-check-label" for="sizeS">S</label>
+									</div>
+									<div class="form-check form-check-inline">
+									  <input class="form-check-input" type="checkbox" name="gdsSize" id="sizeM" value="M" checked>
+									  <label class="form-check-label" for="sizeM">M</label>
+									</div>
+									<div class="form-check form-check-inline">
+									  <input class="form-check-input" type="checkbox" name="gdsSize" id="sizeL" value="L" checked>
+									  <label class="form-check-label" for="sizeL">L</label>
+									</div>
+									<div class="form-check form-check-inline">
+									  <input class="form-check-input" type="checkbox" name="gdsSize" id="sizeXL" value="XL" checked>
+									  <label class="form-check-label" for="sizeXL">XL</label>
+									</div>
+							    </div>
+							  </div>
+							
+							<div class="form-group col-md-12 row">
+								<label>商品説明</label> <textarea class="form-control" name="gdsDes" rows="10" required></textarea>
+							</div>
+											
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="panel panel-default">
+										<div class="panel-heading">ファイル添付</div>
+										<div class="panel-body">
+											<div class="form-group uploadDiv">
+												<input type="file" name='uploadFile' multiple>
+											</div>
+											<div class="uploadResult">
+												<ul>
+												
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div style="float:right;">
+								<button type="submit" class="btn btn-primary">登録</button>	
+								<button type="button" class="btn btn-danger" onclick="location.href='/admin/goods/list'" style="margin-right:24px">キャンセル</button>										
+							</div>	
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<jsp:include page="../include/footer.jsp" />
+	</div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/resources/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="/resources/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/resources/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/resources/admin/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="/resources/admin/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/resources/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/resources/admin/js/demo/datatables-demo.js"></script>
+
+	<script>
+	// 컨트롤러에서 데이터 받기
+	var jsonData = JSON.parse('${category}');
+	
+	var cate1Arr = new Array();
+	var cate1Obj = new Object();
+	
+	// 1차 분류 셀렉트 박스에 삽입할 데이터 준비
+	for(var i = 0; i < jsonData.length; i++) {
+	 
+	 if(jsonData[i].level == "1") {
+	  cate1Obj = new Object();  //초기화
+	  cate1Obj.cateCode = jsonData[i].cateCode;
+	  cate1Obj.cateName = jsonData[i].cateName;
+	  cate1Arr.push(cate1Obj);
+	 }
+	}
+	
+	// 1차 분류 셀렉트 박스에 데이터 삽입
+	var cate1Select = $("select.category1")
+	
+	for(var i = 0; i < cate1Arr.length; i++) {
+	 cate1Select.append("<option value='" + cate1Arr[i].cateCode + "'>"
+	      + cate1Arr[i].cateName + "</option>"); 
+	}
+	
+	$(document).on("change", "select.category1", function(){
+
+		 var cate2Arr = new Array();
+		 var cate2Obj = new Object();
+		 
+		 // 2차 분류 셀렉트 박스에 삽입할 데이터 준비
+		 for(var i = 0; i < jsonData.length; i++) {
+		  
+		  if(jsonData[i].level == "2") {
+		   cate2Obj = new Object();  //초기화
+		   cate2Obj.cateCode = jsonData[i].cateCode;
+		   cate2Obj.cateName = jsonData[i].cateName;
+		   cate2Obj.cateCodeRef = jsonData[i].cateCodeRef;
+		   
+		   cate2Arr.push(cate2Obj);
+		  }
+		 }
+		 
+		 var cate2Select = $("select.category2");
+		 
+		 /*
+		 for(var i = 0; i < cate2Arr.length; i++) {
+		   cate2Select.append("<option value='" + cate2Arr[i].cateCode + "'>"
+		        + cate2Arr[i].cateName + "</option>");
+		 }
+		 */
+		 
+		 cate2Select.children().remove();
+
+		 $("option:selected", this).each(function(){
+		  
+		  var selectVal = $(this).val();  
+		  cate2Select.append("<option value=''>전체</option>");
+		  
+		  for(var i = 0; i < cate2Arr.length; i++) {
+		   if(selectVal == cate2Arr[i].cateCodeRef) {
+		    cate2Select.append("<option value='" + cate2Arr[i].cateCode + "'>"
+		         + cate2Arr[i].cateName + "</option>");
+		   }
+		  }
+		  
+		 });
+		 
+		});
+</script>
+<script>
+	$(document).ready(function(e){
+		var formObj = $("form[role='form']");
+		$("button[type='submit']").on("click", function(e){
+			e.preventDefault();
+			console.log("submit clicked");
+			
+			var str = "";
+			
+			$(".uploadResult ul li").each(function(i, obj) {
+				
+				var jobj = $(obj);
+				console.dir(jobj);
+				
+				str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
+				str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+				str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
+				str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+jobj.data("type")+"'>";
+				str += "<input type='hidden' name='attachList["+i+"].gdsName' value='"+jobj.data("gdsName")+"'>";
+			});
+			formObj.append(str).submit();
+		});
+		
+		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+		var maxSize = 5242880; //5MB
+
+		function checkExtension(fileName, fileSize){
+			if(fileSize >= maxSize){
+				alert("파일 사이즈 초과");
+				return false;
+			}
+			if(regex.test(fileName)){
+				alert("해당 종류의 파일은 업로드할 수 없습니다.");
+				return false;
+			}
+			return true;
+		}
+		
+		$("input[type='file']").change(function(e){
+			var formData = new FormData();
+			var inputFile = $("input[name='uploadFile']");
+			var files = inputFile[0].files;
+			
+			for(var i=0; i<files.length; i++){
+				if(!checkExtension(files[i].name, files[i].size)){
+					return false;
+				}
+				formData.append("uploadFile",files[i]);
+			}
+			
+			$.ajax({
+				url: '/uploadAjaxAction',
+				processData: false,
+				contentType: false,
+				data: formData,
+				type: 'POST',
+				dataType: 'json',
+				success: function(result){
+					console.log(result);
+					showUploadResult(result); //업로드 결과 처리 함수
+				}
+			}); //$.ajax
+		});
+		
+		function showUploadResult(uploadResultArr){
+			if(!uploadResultArr || uploadResultArr.length == 0){return; }
+			
+			var uploadUL = $(".uploadResult ul");
+			var str = "";
+
+			//3
+			$(uploadResultArr).each(function(i,obj){
+				//img type
+				obj.uploadPath = obj.uploadPath.replaceAll('\\','/');
+				if(obj.image){
+					var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+ obj.uuid+"_"+obj.fileName);
+					//str += "<li><div>";
+					str += "<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'><div>";
+					
+					str += "<span>"+ obj.fileName+"</span>";
+					str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+					str += "<img src='/display?fileName="+fileCallPath+"'>";
+					str += "</div>";
+					str += "</li>";
+				}else{
+					var fileCallPath = encodeURIComponent(obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName);
+					var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
+					//str += "<li><div>";
+					str += "<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'><div>";
+					
+					str += "<span>"+obj.fileName+"</span>";
+					str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+					str += "<img src='/resources/img/attach.png'></a>";
+					str += "</div>";
+					str += "</li>";
+				}
+			});
+			uploadUL.append(str);
+		}
+		
+		$(".uploadResult").on("click","button",function(e){
+			console.log("delete file");
+			
+			var targetFile = $(this).data("file");
+			var type = $(this).data("type");
+			var targetLi = $(this).closest("li");
+			
+			$.ajax({
+				url: '/deleteFile',
+				data: {fileName: targetFile, type:type},
+				dataType: 'text',
+				type: 'POST',
+				success: function(result){
+					alert(result);
+					targetLi.remove(); //li태그 삭제
+				}
+			}); //$.ajax
+		});
+	});
+</script>
+
+</body>
+
+</html>

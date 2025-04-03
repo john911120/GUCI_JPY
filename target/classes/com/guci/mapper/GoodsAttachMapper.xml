@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guci.mapper.GoodsAttachMapper">
+	<!-- 商品のイメージを追加する -->
+	<insert id="insert">
+		INSERT INTO goodsImg (uuid, uploadpath, filename, filetype, gdsno, gdsname)
+		VALUES(#{uuid},#{uploadPath},#{fileName},#{fileType},#{gdsNo},#{gdsName})
+	</insert>
+	
+<!--  	<update id="updatePath">
+		UPDATE goodsImg SET uploadPath = replace(uploadPath, '\', '/') WHERE uuid = #{uuid}
+	</update> -->
+	
+ 	<!-- 商品の番号を照会し商品イメージを削除する -->
+	<delete id="delete">
+		DELETE FROM goodsImg WHERE gdsNo = #{gdsNo}
+	</delete>
+	
+ 	<!-- 商品の番号を照会し商品イメージを検索する -->	
+	<select id="findByGdsNo" resultType="com.guci.domain.GoodsAttachVO">
+		SELECT * FROM goodsImg WHERE gdsNo = #{gdsNo}
+	</select>
+	
+	<!-- 商品の番号を照会し商品イメージを全部削除する -->
+	<delete id="deleteAll">
+		DELETE goodsImg WHERE gdsNo = #{gdsNo}
+	</delete>
+
+	<!-- 一日前にアップロードされた商品イメージデータを照会する。 -->
+	<select id="getOldFiles" resultType="com.guci.domain.GoodsAttachVO">
+		SELECT * FROM goodsImg WHERE uploadpath = TO_CHAR(SYSDATE -1, 'yyyy\mm\dd')
+	</select>
+</mapper>

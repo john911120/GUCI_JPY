@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.guci.mapper.CartMapper">
+ 	<!-- カートに商品を追加する -->
+	 <insert id="addCart">
+	 insert into guci_cart (cartNo, userId, gdsNo, gdsName, cartStock,selSize)
+	     values (seq_guci_cart.nextval, #{userId}, #{gdsNo}, #{gdsName},#{cartStock},#{selSize})
+	</insert>
+
+ 	<!-- カートに入っている商品を照会する -->
+	<select id="cart" resultType="com.guci.domain.CartVO">
+	<![CDATA[
+	select gc.*
+	from guci_goods gg, guci_cart gc , guci_user gu ,goodsImg gi
+	where gu.userId= gc.userid and gc.gdsNo=gg.gdsNo and gc.gdsName=gg.gdsName and gi.gdsNo=gc.gdsNo and gi.gdsName=gc.gdsName
+	]]>
+	</select>
+
+ 	<!-- カートに入っている商品を見せる -->
+	<select id="cartList" resultType="com.guci.domain.CartVO"> 
+	select gc.cartNo,gc.selSize,gc.cartStock,gu.userid, gc.gdsName,gc.gdsNo,gg.gdsSize,gg.gdsPrice,gg.gdsNo,gi.uuid,gi.fileName,gi.uploadPath 
+	from guci_goods gg, guci_cart gc , guci_user gu ,goodsImg gi where gu.userId= #{userId} and gc.gdsNo=gg.gdsNo and gc.gdsName=gg.gdsName and gi.gdsNo=gc.gdsNo and gi.gdsName=gc.gdsName 
+	</select>
+
+	<!-- カートに入っている商品を削除する -->
+	<delete id="deleteCart">
+	 delete guci_cart
+	     where cartNo = #{cartNo}
+	     and userId=#{userId}   
+	</delete>
+	
+	 <!-- カートに入っている商品の数を計算し、送金額を表示する -->
+	<select id="sumCart" resultType="long">
+	 select sum(gdsPrice * cartStock) from guci_cart gc, guci_goods gg
+	where gc.gdsNo=gg.gdsNo and gc.userid=#{userId}
+	</select>
+  </mapper>
+  

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guci.mapper.MemberListMapper">
+	<!-- 会員リストを照会する。 -->
+	<select id="getList" resultType="com.guci.domain.MemberListVO">
+		SELECT userId, userName, regDate, sum, stock FROM guci_user 
+	</select>
+	
+	
+</mapper>
+
+ 

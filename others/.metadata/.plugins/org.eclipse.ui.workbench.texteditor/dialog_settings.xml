@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="hasShownOverlayPopupBefore" value="true"/>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value="quartz"/>
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<list key="findhistory">
+			<item value="quartz"/>
+			<item value="commons-fileupload"/>
+			<item value="gson"/>
+			<item value="jackson"/>
+		</list>
+		<list key="replacehistory">
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="807"/>
+		<item key="DIALOG_Y_ORIGIN" value="264"/>
+		<item key="DIALOG_WIDTH" value="322"/>
+		<item key="DIALOG_HEIGHT" value="391"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+	<section name="java.lang.Class">
+		<item key="replaceBarOpen" value="true"/>
+		<list key="findhistory">
+			<item value="OrderListVO"/>
+			<item value="ORDERLIST"/>
+			<item value="원"/>
+			<item value="장바구니"/>
+			<item value="    $(&quot;.aa-browse-btn&quot;).click(function(){"/>
+			<item value="비밀번호"/>
+			<item value="리뷰"/>
+			<item value="작성자"/>
+			<item value="내용"/>
+			<item value="제목"/>
+			<item value="문의하기"/>
+			<item value="기타문의"/>
+			<item value="문의 수정하기"/>
+			<item value="주문결제"/>
+			<item value="상품문의"/>
+		</list>
+		<list key="replacehistory">
+			<item value="ウォン"/>
+			<item value="カート"/>
+			<item value="パスワード"/>
+			<item value="レビュー"/>
+			<item value="作成者"/>
+			<item value="コンテンツ"/>
+			<item value="タイトル"/>
+			<item value="問い合わせする"/>
+			<item value="問い合わせ 修正"/>
+			<item value="ほかの問い合わせ"/>
+			<item value="注文決済"/>
+			<item value="商品の問い合わせ"/>
+			<item value="交換返品"/>
+			<item value="登録"/>
+			<item value="問い合わせ"/>
+		</list>
+	</section>
+</section>

@@ -1,0 +1,80 @@
+package com.guci.controller;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import lombok.extern.log4j.Log4j;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@Log4j
+@WebAppConfiguration
+public class FaqControllerTests {
+/*
+	@Setter(onMethod_=@Autowired)
+	private WebApplicationContext ctx;
+
+	private MockMvc mockMvc;
+*/
+	@Autowired
+	private WebApplicationContext ctx;
+
+	private MockMvc mockMvc;
+
+	@Before
+	public void setup() {
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
+	}
+
+	@Test
+	public void test() throws Exception{
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/faq/list"))
+				.andReturn()
+				.getModelAndView()
+				.getModelMap());
+	}
+
+	@Test
+	public void testRegister() throws Exception{
+		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/faq/register")
+				.param("faqCate", "他の問い合わせ").param("faqTit", "テスト 新しいタイトル").param("faqCon", "テスト 新しいコンテンツ"))
+				.andReturn().getModelAndView().getViewName();
+
+		log.info(resultPage);
+	}
+
+	@Test
+	public void testGet() throws Exception{
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/faq/get")
+				.param("faqNo", "10"))
+				.andReturn().getModelAndView().getModelMap());
+	}
+
+	@Test
+	public void testModify() throws Exception{
+		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/faq/modify")
+				.param("faqNo", "12")
+				.param("faqCate", "配送問い合わせ")
+				.param("faqTit", "修正された テスト 新しい掲示 リスト")
+				.param("faqCon", "修正された テスト 新しい掲示 コンテンツ"))
+				.andReturn().getModelAndView().getViewName();
+		log.info(resultPage);
+	}
+
+	@Test
+	public void testRemove() throws Exception{
+		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/faq/remove")
+				.param("faqNo", "13")
+				).andReturn().getModelAndView().getViewName();
+		log.info(resultPage);
+	}
+}

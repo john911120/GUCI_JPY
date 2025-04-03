@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guci.mapper.AdminMapper">
+	<!-- 総金額 -->
+	<select id="totalIncome" resultType="int">
+		SELECT SUM(sum) FROM guci_user
+	</select>
+	
+	<!-- 本日の収入 -->
+	<select id="todayIncome" resultType="String">
+		SELECT SUM(g.gdsPrice) FROM guci_order o, guci_goods g
+		WHERE o.gdsNo=g.gdsNo AND TO_CHAR(o.orderDate,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+	</select>
+	
+	<select id="todaySalesQuantity" resultType="String">
+        SELECT SUM(cartStock) FROM guci_order
+        WHERE TO_CHAR(orderDate,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+   	</select>
+	
+	<!-- コメントがない問い合わせの掲示板後の数 -->
+	<select id="questionNo" resultType="int">
+		SELECT COUNT(*) FROM guci_question WHERE replyCnt = 0
+	</select>
+	
+	<!-- 最近購買データ検索 -->
+	<select id="latelyOrderList" resultType="com.guci.domain.LatelyOrderVO">
+		SELECT o.gdsName, o.cartStock AS stock, g.gdsPrice*o.cartStock AS price, o.userId, o.orderDate
+		FROM guci_order o, guci_goods g
+		WHERE o.gdsNo=g.gdsNo
+		ORDER BY o.orderDate
+	</select>
+	
+</mapper>
+
