@@ -48,12 +48,13 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQuery�
 
 <h2 aligh="left"><span style="color:teal;">✍️ 使用ライブラリについて</span></h2>
 <p>
-本プロジェクトでは Oracle データベースとの接続のため、`lib/ojdbc8.jar` をプロジェクト内に直接含めています。  
+本プロジェクトでは Oracle データベースとの接続のため、`lib/ojdbc6_g.jar` をプロジェクト内に直接含めています。  
 Maven や Gradle などの依存関係管理ツールを使用しない環境でも、動作確認を容易に行えるようにするための対応です。
 </p>
 <p>
 そのため、初回起動時は追加設定なしで JDBC ドライバが認識され、すぐに動作確認が可能です。
 </p>
+<p>当プロジェクトに使われているojdbc6_g.jarは<strong>others/ojdbc6_g.jar</strong>こちらに位置しています。</p>
 
 
 
