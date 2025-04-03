@@ -54,7 +54,8 @@ Maven や Gradle などの依存関係管理ツールを使用しない環境で
 <p>
 そのため、初回起動時は追加設定なしで JDBC ドライバが認識され、すぐに動作確認が可能です。
 </p>
-<p>当プロジェクトに使われているojdbc6_g.jarは<strong>others/ojdbc6_g.jar</strong>こちらに位置しています。</p>
+<p>当プロジェクトに使われているojdbc6_g.jarファイルは
+  <strong>others/ojdbc6_g.jar</strong>こちらに位置しています。</p>
 
 
 
