@@ -46,7 +46,7 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQuery�
 <li> チーム開発期間: 2021年1月 ～ 2021年2月</li>
 <li> 提出目的: 日本企業へのポートフォリオ用</li>
 
-<h2 aligh="left"><span style="color:teal;">✍️ 使用ライブラリについて</span></h2>
+<h2 aligh="left"><span style="color:teal;">✍️ 使用ライブラリについて（使用JAR）</span></h2>
 <p>
 本プロジェクトでは Oracle データベースとの接続のため、`lib/ojdbc6_g.jar` をプロジェクト内に直接含めています。  
 Maven や Gradle などの依存関係管理ツールを使用しない環境でも、動作確認を容易に行えるようにするための対応です。
