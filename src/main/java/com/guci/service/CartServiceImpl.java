@@ -25,7 +25,9 @@ public class CartServiceImpl  implements CartService{
 	//@Setter(onMethod_=@Autowired)
 	@Autowired
 	private CartMapper mapper;
-
+	
+	
+	// カート情報をDBに追加します。
 	@Override
 	public void addCart(CartVO cart) {
 		mapper.addCart(cart);
@@ -33,7 +35,7 @@ public class CartServiceImpl  implements CartService{
 	}
 
 
-
+	//  ユーザーごとにカートに追加した商品をDBから取得します。
 	@Override
 	public List<CartVO> cartList(String userId) {
 
@@ -41,7 +43,7 @@ public class CartServiceImpl  implements CartService{
 	}
 
 
-
+	//  ユーザーがカートに追加した商品をDBから削除します。
 	@Override
 	public void deleteCart(TestVO vo) {
 		mapper.deleteCart(vo);
@@ -49,7 +51,7 @@ public class CartServiceImpl  implements CartService{
 	}
 
 
-
+	// ユーザーのカートにある商品の合計金額を取得します。
 	@Override
 	public Long sumCart(String userId) {
 		return mapper.sumCart(userId);

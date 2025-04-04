@@ -7,12 +7,27 @@ import com.guci.domain.TestVO;
 
 public interface CartMapper {
 
-	//장바구니 추가
+	/*
+	  カート関連のデータベース操作を行うマッパーインターフェースです。
+	 
+	  addCart：商品をカートに追加します（INSERT）
+	            ※ 戻り値なし
+	 
+	  cartList：ユーザーごとにカート内の商品を取得します。
+	            @return カートに入っている商品のリスト（List<CartVO>）
+	 
+	  deleteCart：ユーザーがカートに追加した商品を削除します（DELETE）
+	               ※ 戻り値なし
+	 
+	  sumCart：カートに追加された商品の総金額を取得します（SELECT SUM）
+	            @return 総金額（Long型）
+	 */
+
 	public void addCart(CartVO cart);
-	//장바구니 목록
+
 	public List<CartVO> cartList (String userId);
-	//장바구니 삭제
+
 	public void deleteCart(TestVO vo);
-	//총 금액
+
 	public Long sumCart(String userId);
 }
