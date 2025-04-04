@@ -21,19 +21,24 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class FaqController {
 	
-	//@Setter(onMethod_=@Autowired)
 	@Autowired
 	private FaqService service;
 
+	// すべてのFAQ記事を取得します 
 	@GetMapping("/list")
 	public void list(Model model) {
 		log.info("list");
 		model.addAttribute("list", service.getList());
 	}
 
+	/*
+	この register() メソッドは、新規登録フォームを表示するだけの役割で、処理ロジックは含まれていません。
+	Spring MVCのビュー解決規則により、/faq/register.jsp が自動的に表示されます。 
+	*/
 	@GetMapping("/register")
 	public void register() {}
-
+	
+	// 登録と同時に生成された主キー（faqNo）を取得します
 	@PostMapping("/register")
 	public String register(FaqVO faq, RedirectAttributes rttr) {
 		log.info("register : "+faq);
@@ -42,12 +47,14 @@ public class FaqController {
 		return "redirect:/faq/list";
 	}
 
+	// FAQ記事の詳細を取得します
 	@GetMapping({"/get","/modify"})
 	public void get(@RequestParam("faqNo") Long faqNo, Model model) {
 		log.info("/get or modify");
 		model.addAttribute("faq", service.get(faqNo));
 	}
 
+	// FAQ記事を更新します
 	@PostMapping("/modify")
 	public String modify(FaqVO faq, RedirectAttributes rttr) {
 		log.info("modify:"+faq);
@@ -57,6 +64,7 @@ public class FaqController {
 		return "redirect:/faq/list";
 	}
 
+	// FAQ記事を削除します
 	@PostMapping("/remove")
 	public String remove(@RequestParam("faqNo") Long faqNo, RedirectAttributes rttr) {
 		log.info("remove..."+faqNo);
