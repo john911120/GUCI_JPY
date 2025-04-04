@@ -66,4 +66,5 @@ public interface UserMapper {
       ユーザー削除（退会処理）
      */
     public int delete(String userId);
+    
 }

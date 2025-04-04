@@ -64,4 +64,5 @@ public interface UserService {
       @param div メールの種別（"findPw" など）
      */
     public void sendEmail(UserVO vo, String div) throws Exception;
+    
 }

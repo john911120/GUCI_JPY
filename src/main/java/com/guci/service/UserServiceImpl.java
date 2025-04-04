@@ -170,4 +170,5 @@ public class UserServiceImpl implements UserService {
 	public int delete(String userId) {
 		return mapper.delete(userId);
 	}
+	
 }
