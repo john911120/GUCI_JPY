@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.guci.domain.UserVO;
 import com.guci.service.UserService;
 
+import jdk.internal.org.jline.utils.Log;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -43,8 +44,7 @@ public class UserController {
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public void loginGET() {
 
-		log.info("회원가입 페이지 진입");
-
+		log.info("会員加入ページへ移動");
 	}
 
 	// 회원가입
@@ -69,7 +69,7 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public void accountGET() {
 
-		log.info("로그인 페이지 진입");
+		log.info("ログインページへ移動");
 
 	}
 
@@ -78,9 +78,9 @@ public class UserController {
 	@ResponseBody
 	public String userIdChkPOST(String userId) throws Exception {
 
-		log.info("userIdChk() 진입");
+		log.info("userIdChk() チェック");
 		int result = userservice.idCheck(userId);
-		log.info("결과값 = " + result);
+		log.info("結果 = " + result);
 		if (result != 0) {
 			return "fail"; // 중복 아이디가 존재
 		} else {
@@ -94,20 +94,20 @@ public class UserController {
 	public String mailCheckGET(String email) throws Exception {
 
 		/* 뷰(View)로부터 넘어온 데이터 확인 */
-		log.info("이메일 데이터 전송 확인");
-		log.info("인증번호 : " + email);
+		log.info("メールアドレス データ転送確認");
+		log.info("認証番号 : " + email);
 
 		/* 인증번호(난수) 생성 */
 		Random random = new Random();
 		int checkNum = random.nextInt(888888) + 111111;
-		log.info("인증번호 " + checkNum);
+		log.info("認証番号 " + checkNum);
 
 		/* 이메일 보내기 */
 		String setFrom = "zndn121@naver.com";
 		String toMail = email;
-		String title = "회원가입 인증 이메일 입니다.";
-		String content = "홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + "인증 번호는 " + checkNum + "입니다." + "<br>"
-				+ "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+		String title = "会員加入認証メールです。";
+		String content = "認証番号は " + checkNum + "です。" + "<br>"
+				+ "認証番号を入力してください。";
 		try {
 
 			MimeMessage message = mailSender.createMimeMessage();
@@ -132,8 +132,6 @@ public class UserController {
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String loginPOST(HttpServletRequest request, UserVO user, RedirectAttributes rttr) throws Exception {
 		log.info(user);
-//        System.out.println("login 메서드 진입");
-//        System.out.println("전달된 데이터 : " + user);
 		HttpSession session = request.getSession();
 		String rawPw = "";
 		String encodePw = "";
@@ -299,7 +297,7 @@ public class UserController {
 
 	@PostMapping("/delete_info")
 	public String delete(HttpSession session) throws Exception {
-		log.info("회원탈퇴");
+		log.info("会員脱退");
 		Object user = session.getAttribute("user");
 		String userId = ((UserVO) user).getUserId();
 		log.info(userId);
