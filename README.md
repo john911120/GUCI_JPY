@@ -64,6 +64,7 @@ Maven や Gradle などの依存関係管理ツールを使用しない環境で
 <p> 🔐 仮パスワード再設定</p>
 <li> ランダムな12文字の仮パスワードを生成</li>
 <li> HtmlEmailで送信後、BCryptPasswordEncoderで暗号化してDBに保存</li>
+<li> Spring Security の BCryptPasswordEncoder によってパスワードを安全に暗号化しました。</li>
 
 
 
