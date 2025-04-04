@@ -5,37 +5,65 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.guci.domain.UserVO;
 
+/*
+  ユーザー関連のデータベース操作を担当するマッパーインターフェース
+  MyBatisによってSQLと連携される。
+ */
 public interface UserMapper {
 
-	//회원가입
-		public void userJoin(UserVO user);
-	// 아이디 중복 검사
-		public int idCheck(String userId);
-    // 비밀번호 체크
-		public int pwCheck(String userPw);
-	// 로그인
-	    public UserVO userLogin(UserVO user);
-	//아이디 찾기
-	    public UserVO searchId(UserVO vo) throws Exception;
+    /*
+      ユーザー新規登録（INSERT）
+     */
+    public void userJoin(UserVO user);
 
+    /*
+      ユーザーIDの重複確認（SELECT COUNT）
+     */
+    public int idCheck(String userId);
 
-	//이메일 찾기
-	public String findEmail(String userid) throws Exception;
+    /*
+      パスワード照合用（未使用の可能性あり）
+     */
+    public int pwCheck(String userPw);
 
-	//비밀번호 찾기(임시비밀번호 업데이트)
-	@Transactional
-	public int updatePw(UserVO vo) throws Exception;
+    /*
+      ログイン処理（IDとPWによる照合）
+     */
+    public UserVO userLogin(UserVO user);
 
-	//원래 비밀번호 가져오기
-	    public String userPw(String userId);
+    /*
+      ユーザーID検索（名前・メールに基づく）
+     */
+    public UserVO searchId(UserVO vo) throws Exception;
 
-	//회원정보 가져오기
-	    public UserVO user(String userId);
+    /*
+      ユーザーの登録メールアドレス取得
+     */
+    public String findEmail(String userid) throws Exception;
 
-	//회원정보 변경하기
-	    public int updateInfo(UserVO user);
+    /*
+      パスワード更新（仮パスワード再設定）
+     */
+    @Transactional
+    public int updatePw(UserVO vo) throws Exception;
 
-	//회원탈퇴
-//	    public int deleteInfo(String userId);
-	    public int delete(String userId);
+    /*
+      パスワード取得（ユーザーID基準）
+     */
+    public String userPw(String userId);
+
+    /*
+      ユーザー情報取得（ユーザーID基準）
+     */
+    public UserVO user(String userId);
+
+    /*
+      ユーザー情報更新
+     */
+    public int updateInfo(UserVO user);
+
+    /*
+      ユーザー削除（退会処理）
+     */
+    public int delete(String userId);
 }
