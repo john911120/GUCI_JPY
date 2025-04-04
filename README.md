@@ -16,6 +16,7 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQuery�
 <li> JQuery/ Bootstrap3.3.7 + 4 / JSP / Servlet </li>
 <li> Spring Framework5 / Spring Security </li>
 <li> Apache Tomcat 9.0 </li>
+<li> JavaMailSender / HtmlEmail / BCryptPasswordEncoder(認証,暗号化)</li>
 
 <h2 align="left"><span style="color:teal;">🗂 機能一覧（Main Features）</span></h2> 
 <li> ユーザー登録・ログイン機能　</li>
@@ -56,6 +57,13 @@ Maven や Gradle などの依存関係管理ツールを使用しない環境で
 </p>
 <p>※ 当プロジェクトに使われているojdbc6_g.jarファイルは
   <strong>others/ojdbc6_g.jar</strong>に格納されています。</p>
+<p>✅ メール認証機能</p>
+<li> JavaMailSenderを使用し、6桁の認証コードを生成・送信</li>
+<li> MimeMessageHelperでHTML形式のメールを送信</li><br>
+
+<p> 🔐 仮パスワード再設定</p>
+<li> ランダムな12文字の仮パスワードを生成</li>
+<li> HtmlEmailで送信後、BCryptPasswordEncoderで暗号化してDBに保存</li>
 
 
 
