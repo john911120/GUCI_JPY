@@ -59,7 +59,7 @@ Maven や Gradle などの依存関係管理ツールを使用しない環境で
   <strong>others/ojdbc6_g.jar</strong>に格納されています。</p>
 <p>✅ メール認証機能</p>
 <li> JavaMailSenderを使用し、6桁の認証コードを生成・送信</li>
-<li> MimeMessageHelperでHTML形式のメールを送信</li><br>
+<li> MimeMessageHelperでHTML形式のメールを送信</li>
 
 <p> 🔐 仮パスワード再設定</p>
 <li> ランダムな12文字の仮パスワードを生成</li>
