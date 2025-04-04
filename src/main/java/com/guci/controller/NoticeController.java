@@ -25,6 +25,7 @@ public class NoticeController {
 
 private NoticeService service;
 
+	//お知らせの記事リスト
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) {
 		log.info("list : "+cri);
@@ -34,13 +35,16 @@ private NoticeService service;
 		log.info("total : "+total);
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
-
+		/*
+			この register() メソッドは、新規登録フォームを表示するだけの役割で、処理ロジックは含まれていません。
+			Spring MVCのビュー解決規則により、/notice/register.jsp が自動的に表示されます。 
+		*/
 		@GetMapping("/register")
 		public void register() {
 
 		}
 
-
+	//記事を登録（登録時に自動生成される主キーを含む）
 	@PostMapping("/register")
 	public String register(NoticeVO notice, RedirectAttributes rttr) {
 		log.info("register : "+notice);
@@ -49,7 +53,7 @@ private NoticeService service;
 		return "redirect:/notice/list";
 	}
 
-	//218, 259
+	//記事の詳細情報を取得
 	@GetMapping({"/get","/modify"})
 	public void get(@RequestParam("noticeNo") Long noticeNo,
 			@ModelAttribute("cri") Criteria cri, Model model) {
@@ -57,7 +61,7 @@ private NoticeService service;
 		model.addAttribute("notice",service.get(noticeNo));
 	}
 
-	//219
+	//記事を更新する
 	@PostMapping("/modify")
 	public String modify(NoticeVO notice,
 			@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
@@ -75,7 +79,7 @@ private NoticeService service;
 		return "redirect:/notice/list"; // + cri.getListLink();
 	}
 
-
+	//記事を削除する
 	@PostMapping("/remove")
 	public String remove(@RequestParam("noticeNo") Long noticeNo,
 			Criteria cri, RedirectAttributes rttr) {
