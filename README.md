@@ -66,7 +66,13 @@ Maven や Gradle などの依存関係管理ツールを使用しない環境で
 <li> HtmlEmailで送信後、BCryptPasswordEncoderで暗号化してDBに保存</li>
 <li> Spring Security の BCryptPasswordEncoder によってパスワードを安全に暗号化しました。</li>
 
-
-
+<h2 aligh="left"><span style="color:teal;"><strong> 🙇‍♂️ 作業を通じての気づきと感想</strong></span></h2>
+<p>
+このプロジェクトのコード整備・日本語コメント追加は、単なる形式的な作業ではなく、全体の構造とロジックを自分自身の言葉で再確認するプロセスでした。
+特に移動中にもERDの整合性を確認しながら作業を進めたことは、限られた時間を最大限に活かす自分なりの努力でした。
+</p>
+<p>
+今後、さらに多言語対応やテストコードの追加など、機能拡張を通してより完成度を高めていく予定です。
+</p>
 
 
