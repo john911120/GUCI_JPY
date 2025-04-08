@@ -25,14 +25,13 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class GoodsServiceImpl implements GoodsService {
 
-	//@Setter(onMethod_=@Autowired)
 	@Autowired
 	private GoodsMapper mapper;
 
-	//@Setter(onMethod_=@Autowired)
 	@Autowired
 	private GoodsAttachMapper attachMapper;
 
+	// 商品を登録し、添付ファイルも同時に保存
 	@Transactional
 	@Override
 	public void register_goods(GoodsVO goods) {
@@ -51,18 +50,21 @@ public class GoodsServiceImpl implements GoodsService {
 		});
 	}
 
+	// 商品情報（JOIN含む）を取得
 	@Override
 	public GoodsListVO get_goods(Long gdsNo) {
 		log.info("get..."+gdsNo);
 		return mapper.read_goods(gdsNo);
 	}
-
+	
+	// 商品情報（JOINなし）を取得
 	@Override
 	public GoodsVO get_goods_no_join(Long gdsNo) {
 		log.info("get..."+gdsNo);
 		return mapper.read_goods_no_join(gdsNo);
 	}
 
+	// 商品情報を更新し、添付ファイルも再登録
 	@Transactional
 	@Override
 	public boolean modify_goods(GoodsVO goods) {
@@ -80,6 +82,7 @@ public class GoodsServiceImpl implements GoodsService {
 		return modifyResult;
 	}
 
+	// 商品情報と添付ファイルを削除
 	@Transactional
 	@Override
 	public boolean remove_goods(Long gdsNo) {
@@ -88,17 +91,20 @@ public class GoodsServiceImpl implements GoodsService {
 		return mapper.delete_goods(gdsNo)==1;
 	}
 
+	// 商品リストを取得
 	@Override
 	public List<GoodsListVO> getList_goods() {
 		log.info("getList...");
 		return mapper.getList_goods();
 	}
 
+	// 商品カテゴリリストを取得
 	@Override
 	public List<CategoryVO> category_goods() {
 		return mapper.category_goods();
 	}
 
+	// 添付ファイルリストを取得
 	@Override
 	public List<GoodsAttachVO> getAttachList(Long gdsNo) {
 		log.info("get Attach list by gdsNo"+gdsNo);
@@ -106,7 +112,7 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 
-	//페이지에 데이터 넣기
+	// 各タブごとの商品リストを取得（ページングあり）
 	@Override
 	public List<GoodsListAttachVO> getList_best(GoodsCriteria1 cri) {
 		return mapper.getListWithPaging_best(cri);
@@ -131,31 +137,9 @@ public class GoodsServiceImpl implements GoodsService {
 	public List<GoodsListAttachVO> getList_unisex(GoodsCriteria1 cri) {
 		return mapper.getListWithPaging_unisex(cri);
 	}
-//	@Override
-//	public List<GoodsListAttachVO> getList_best(Criteria cri) {
-//		return mapper.getListWithPaging_best(cri);
-//	}
-//
-//	@Override
-//	public List<GoodsListAttachVO> getList_new(Criteria cri) {
-//		return mapper.getListWithPaging_new(cri);
-//	}
-//
-//	@Override
-//	public List<GoodsListAttachVO> getList_man(Criteria cri) {
-//		return mapper.getListWithPaging_man(cri);
-//	}
-//
-//	@Override
-//	public List<GoodsListAttachVO> getList_woman(Criteria cri) {
-//		return mapper.getListWithPaging_woman(cri);
-//	}
-//
-//	@Override
-//	public List<GoodsListAttachVO> getList_unisex(Criteria cri) {
-//		return mapper.getListWithPaging_unisex(cri);
-//	}
 
+	// 商品詳細情報を取得し、閲覧数を更新
+	// データの整合性を保ち、Dirty Read（ダーティリード）を防ぐために、トランザクション分離レベル READ_COMMITTED を使用しています。
 	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public GoodsListAttachVO get_goods_detail(Long gdsNo) throws Exception {
@@ -163,7 +147,7 @@ public class GoodsServiceImpl implements GoodsService {
 		return mapper.read_goods_detail(gdsNo);	}
 
 
-	//페이지 수 처리
+	// 各カテゴリの総商品数を取得（ページネーション用）
 	@Override
 	public int getTotal_best(GoodsCriteria1 cri) {
 		return mapper.getTotalCount_best(cri);
@@ -189,38 +173,14 @@ public class GoodsServiceImpl implements GoodsService {
 		return mapper.getTotalCount_unisex(cri);
 	}
 
-//	@Override
-//	public int getTotal_best(Criteria cri) {
-//		return mapper.getTotalCount_best(cri);
-//	}
-//
-//	@Override
-//	public int getTotal_new(Criteria cri) {
-//		return mapper.getTotalCount_new(cri);
-//	}
-//
-//	@Override
-//	public int getTotal_man(Criteria cri) {
-//		return mapper.getTotalCount_man(cri);
-//	}
-//
-//	@Override
-//	public int getTotal_woman(Criteria cri) {
-//		return mapper.getTotalCount_woman(cri);
-//	}
-//
-//	@Override
-//	public int getTotal_unisex(Criteria cri) {
-//		return mapper.getTotalCount_unisex(cri);
-//	}
 
-
-	//검색 처리
+	// 検索結果の商品リストを取得
 	@Override
 	public List<GoodsListAttachVO> getList_search(GoodsCriteria2 cri) {
 		return mapper.getListWithPaging_search(cri);
 	}
-
+	
+	// 検索結果の総件数を取得
 	@Override
 	public int getTotal_search(GoodsCriteria2 cri) {
 		return mapper.getTotalCount_search(cri);

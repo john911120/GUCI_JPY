@@ -33,16 +33,20 @@ import net.sf.json.JSONArray;
 @AllArgsConstructor
 public class GoodsController {
 
-	//@Setter(onMethod_=@Autowired)
 	@Autowired
 	private GoodsService service;
 
+	// 商品リストを表示する
 	@GetMapping("/list")
 	public void list(Model model) {
 		log.info("list");
 		model.addAttribute("list", service.getList_goods());
 	}
 
+	/* 商品登録ページの初期表示処理
+	 カテゴリー一覧を取得し、JSON形式で画面に渡す。
+	 実際の商品登録処理は含まれていない。
+    */
 	@GetMapping("/register")
 	public void register(Model model) {
 		log.info("get goods register");
@@ -52,6 +56,7 @@ public class GoodsController {
 		model.addAttribute("category", JSONArray.fromObject(category));
 	}
 
+	// 商品を登録する
 	@PostMapping("/register")
 	public String register(GoodsVO goods, RedirectAttributes rttr) {
 
@@ -63,13 +68,13 @@ public class GoodsController {
 			goods.getAttachList().forEach(attach -> log.info(attach));
 		}
 		log.info("====================");
-		service.register_goods(goods); //데이터가 board객체로 넘어와서 DB에 등록됨
+		service.register_goods(goods); 
 		service.getAttachList(goods.getGdsNo());
-	    //한번만 등록하고 사라짐, redirect시 데이터 전달 가능
 		rttr.addFlashAttribute("result", goods.getGdsNo());
-		return "redirect:/admin/goods/list"; //목록 페이지로 돌아감
+		return "redirect:/admin/goods/list"; 
 	}
-
+	
+	// 商品番号を照会し、商品情報を表示、修正する
 	@GetMapping({"/get","/modify"})
 	public void get(@RequestParam("gdsNo") long gdsNo, Model model) {
 		log.info("/get or modify");
@@ -79,7 +84,8 @@ public class GoodsController {
 
 		model.addAttribute("goods", service.get_goods(gdsNo));
 	}
-
+	
+	// 商品番号を照会し、商品情報を修正する
 	@PostMapping("/modify")
 	public String modify(GoodsVO goods, RedirectAttributes rttr) {
 		log.info("modify : "+goods);
@@ -89,6 +95,7 @@ public class GoodsController {
 		return "redirect:/admin/goods/list";
 	}
 
+	// 商品番号を照会し、商品情報を削除する
 	@PostMapping("/remove")
 	public String remove(@RequestParam("gdsNo") Long gdsNo, RedirectAttributes rttr) {
 		log.info("remove..."+gdsNo);
@@ -100,6 +107,10 @@ public class GoodsController {
 		return "redirect:/admin/goods/list";
 	}
 
+	/*
+	  指定された商品に関連する添付ファイルを削除します。
+	  画像ファイルの場合は、対応するサムネイル画像も一緒に削除されます。
+	 */
 	private void deleteFiles(List<GoodsAttachVO> attachList) {
 		if(attachList == null || attachList.size()==0) {
 			return;
@@ -122,6 +133,7 @@ public class GoodsController {
 		});
 	}
 
+	// 商品番号を照会し、添付ファイルリストを表示する
 	@GetMapping(value="/getAttachList", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<GoodsAttachVO>> getAttachList(Long gdsNo){

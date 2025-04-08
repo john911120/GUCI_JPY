@@ -6,6 +6,50 @@ import lombok.Data;
 
 @Data
 public class GoodsListAttachVO {
+	/*
+	商品番号	 
+	private Long gdsNo;
+
+	商品名
+	private String gdsName;
+	
+	商品価格	
+	private Long gdsPrice;
+	
+	商品割引	
+	private String gdsDes;
+	
+	商品のサイズ	
+	private String gdsSize;
+	
+	商品登録日
+	private Date gdsDate;
+	
+	商品プリビュー
+	private Long gdsViews;
+	
+	商品カテゴリー
+	private String cateCode;
+
+	商品カテゴリー名
+	private String cateName;
+	
+	商品上位カテゴリコード（参照元）
+	private String cateCodeRef;
+	
+	添付ファイルを識別するコード
+	private String uuid;
+	
+	添付ファイルアップロードパス
+	private String uploadPath;
+	
+	添付ファイル名
+	private String fileName;
+	
+	添付ファイルタイプ
+	private boolean fileType;
+	 */
+	
 	private Long gdsNo;
 	private String gdsName;
 	private Long gdsPrice;
@@ -15,8 +59,12 @@ public class GoodsListAttachVO {
 	private Long gdsViews;
 	private String cateCode;
 
-	private String cateName, cateCodeRef;
+	private String cateName;
+	private String cateCodeRef;
 
-	private String uuid, uploadPath, fileName;
+	private String uuid;
+	private String uploadPath;
+	private String fileName;
+	
 	private boolean fileType;
 }
