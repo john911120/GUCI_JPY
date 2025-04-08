@@ -24,14 +24,15 @@ public class OrderController {
 	@Autowired
 	private OrderService service;
 
+	// 注文情報をPOST方式に通信し、注文情報を処理する
 	@RequestMapping(value="/order", method=RequestMethod.POST)
 	public String orderPost(HttpSession session, OrderInfoVO ivo, OrderVO vo) {
 		Object user = session.getAttribute("user");
 		String userId = ((UserVO) user).getUserId();
 		ivo.setUserId(userId);
 		vo.setUserId(userId);
-		log.info("주문정보 : "+ivo);
-		log.info("주문 : " +vo);
+		log.info("注文情報 : "+ivo);
+		log.info("注文 : " +vo);
 		service.insertInfo(ivo);
 		service.orderInsert(vo);
 		service.deleteInfo(userId);
