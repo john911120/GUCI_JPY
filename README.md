@@ -46,6 +46,10 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQuery�
 <h2 aligh="left"><span style="color:teal;"> 📎 その他（Others）</span></h2>
 <li> チーム開発期間: 2021年1月 ～ 2021年2月</li>
 <li> 提出目的: 日本企業へのポートフォリオ用</li>
+<li>限られた時間内では、機能の開発が最優先であったため、一部のパスや設定はハードコーディングされています。</li>
+<li>実際のサービス環境では、<code>application.properties</code>などの外部設定を利用し、柔軟なパスおよびファイル管理が必要であることを認識しております。</li>
+
+
 
 <h2 aligh="left"><span style="color:teal;">✍️ 使用ライブラリについて（使用JAR）</span></h2>
 <p>
@@ -74,5 +78,4 @@ Maven や Gradle などの依存関係管理ツールを使用しない環境で
 <p>
 今後、さらに多言語対応やテストコードの追加など、機能拡張を通してより完成度を高めていく予定です。
 </p>
-
 
