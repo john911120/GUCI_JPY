@@ -18,18 +18,17 @@ import lombok.extern.log4j.Log4j;
 @Service
 @Log4j
 @AllArgsConstructor
-// (390~91)
 public class QuesReplyServiceImpl implements QuesReplyService {
-	// (484) 트랜잭션 처리
-	//@Setter(onMethod_= @Autowired)
+
 	@Autowired
 	private QuesReplyMapper mapper;
 
-	//@Setter(onMethod_= @Autowired)
 	@Autowired
 	private QuesMapper quesMapper;
 
-
+	/*
+	  Q&A記事に対するコメントを登録し、該当記事のコメント数を1増加させる
+	 */
 	@Transactional
 	@Override
 	public int register(QuesReplyVO vo) {
@@ -40,24 +39,27 @@ public class QuesReplyServiceImpl implements QuesReplyService {
 		return mapper.insert(vo);
 	}
 
+	/*
+	  コメント番号を基に、コメント情報を取得する
+	 */
 	@Override
 	public QuesReplyVO get(Long rno) {
 		log.info("get..." + rno);
 		return mapper.read(rno);
 	}
 
+	/*
+	  コメントを修正する
+	 */
 	@Override
 	public int modify(QuesReplyVO vo) {
 		log.info("modify..." + vo);
 		return mapper.update(vo);
 	}
-//	@Override
-//	public int remove(Long replyNo) {
-//		log.info("remove..." + replyNo);
-//
-//		return mapper.delete(replyNo);
-//	}
 
+	/*
+	  コメントを削除し、該当記事のコメント数を1減少させる
+	 */
 	@Transactional
 	@Override
 	public int remove(Long rno) {
@@ -69,6 +71,9 @@ public class QuesReplyServiceImpl implements QuesReplyService {
 		return mapper.delete(rno);
 	}
 
+	/*
+	  指定されたQ&A記事に関連するコメント一覧を、ページング付きで取得する
+	 */
 	@Override
 	public List<QuesReplyVO> getList(QuesCriteria cri, Long quesNo) {
 		log.info("get Reply List of a Board" + quesNo);
@@ -76,10 +81,11 @@ public class QuesReplyServiceImpl implements QuesReplyService {
 		return mapper.getListWithPaging(cri, quesNo);
 	}
 
-	// (434~5)
+	/*
+	  コメントの総数と、ページングされたコメントリストをDTO形式で返却する
+	 */
 	@Override
 	public QuesReplyPageDTO getListPage(QuesCriteria cri, Long quesNo) {
-
 		return new QuesReplyPageDTO(
 				mapper.getCountByQuesNo(quesNo),
 				mapper.getListWithPaging(cri, quesNo));

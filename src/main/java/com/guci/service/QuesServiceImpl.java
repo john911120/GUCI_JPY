@@ -19,18 +19,15 @@ import lombok.extern.log4j.Log4j;
 //@AllArgsConstructor
 public class QuesServiceImpl implements QuesService {
 
-	// 4.3 이상에서는 자동 처리가 가능하게 되어졌다.
-	//@Setter(onMethod_ = @Autowired)
 	@Autowired
 	private QuesMapper mapper;
 
-	// (566) quesServiceImpl를 처리하기 위한 setter 메서드 추가
-	//@Setter(onMethod_ = @Autowired)
 	@Autowired
 	private QuesAttachMapper attachMapper;
 
-	// (204)
-	// (566) quesServiceImpl
+	/*
+	  Q&A記事を登録する
+	 */
 	@Transactional
 	@Override
 	public void register(QuesVO ques) {
@@ -46,24 +43,21 @@ public class QuesServiceImpl implements QuesService {
 		});
 	}
 
+	// 特定のQ&A記事に対するコメント一覧
 	@Override
 	public List<QuesVO> getList(QuesCriteria cri) {
 		log.info("Get List with criteria : " + cri);
 		return mapper.getListWithPaging(cri);
 	}
-//	@Override
-//	public List<quesVO> getList() {
-//		log.info("GetList...........");
-//		return mapper.getlist();
-//	}
 
+	// Q&A記事の詳細を取得します
 	@Override
 	public QuesVO get(Long quesNo) {
 		log.info("get..." + quesNo);
 		return mapper.read(quesNo);
 	}
-
-	// (591) 서버 측 게시물 수정과 첨부파일 관련 코드 수정
+	
+	// Q&A記事を更新します
 	@Transactional
 	@Override
 	public boolean modify(QuesVO ques) {
@@ -80,8 +74,8 @@ public class QuesServiceImpl implements QuesService {
 		}
 		return modifyResult;
 	}
-
-	// (579) quesServiceImpl 변경
+	
+	// Q&A記事を削除します
 	@Transactional
 	@Override
 	public boolean remove(Long quesNo) {
@@ -92,18 +86,18 @@ public class QuesServiceImpl implements QuesService {
 		return mapper.delete(quesNo) == 1;
 	}
 
+	// Q&Aの総記事数を取得（ページングのため）
 	@Override
 	public int getTotal(QuesCriteria cri) {
 		log.info("get total count");
 		return mapper.getTotalCount(cri);
 	}
 
-	// (569) 게시물의 첨부파일의 목록을 가져오게 한다.
+	// Q&A記事と添付ファイルを取得します
 	@Override
 	public List<QuesAttachVO> getAttachList(Long quesNo) {
 		log.info("get Attach list by quesNo : " + quesNo);
 		return attachMapper.findByquesNo(quesNo);
 	}
-
 
 }

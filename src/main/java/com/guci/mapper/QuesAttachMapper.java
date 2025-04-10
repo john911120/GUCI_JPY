@@ -7,16 +7,19 @@ import org.apache.ibatis.annotations.Param;
 import com.guci.domain.QuesAttachVO;
 
 public interface QuesAttachMapper {
-	// (552) 첨부파일 처리를 위한 mapper
+
+	// Q&A記事の添付ファイルを登録
 	public void insert(QuesAttachVO vo);
 
+	// 添付ファイルをUUIDで削除
 	public void delete(String uuid);
 
+	// Q&A記事番号に基づいて添付ファイルリストを取得
 	public List<QuesAttachVO> findByquesNo(Long quesNo);
 
-	// (578) 첨부파일 삭제 처리
+	// Q&A記事削除時に添付ファイルを一括削除
 	public void deleteAll(@Param("quesNo") Long quesNo);
 
-	// (600) 데이터베이스에 저장된 모든 파일의 목록을 사용하기 위한 코드 추가
+	// 一定期間経過した古い添付ファイルを取得（クリーンアップ目的）
 	public List<QuesAttachVO> getOldFiles();
 }

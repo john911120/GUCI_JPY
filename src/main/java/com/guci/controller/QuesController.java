@@ -27,6 +27,10 @@ import com.guci.service.QuesService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
+/*
+	Q&A（質問掲示板）に管理するコントローラー
+*/
+
 @Controller
 @Log4j
 @RequestMapping("/question/*")
@@ -35,7 +39,7 @@ public class QuesController {
 
 	private QuesService service;
 
-
+	// すべてのQ&A記事を取得します 
 	@GetMapping("/list")
 	public void list(QuesCriteria cri, Model model) {
 		log.info("list" + cri);
@@ -49,6 +53,7 @@ public class QuesController {
 	}
 
 
+	// Q&A記事を登録し、登録された主キー（quesNo）を取得してリダイレクトします
 	@PostMapping("/register")
 	public String register(QuesVO ques, RedirectAttributes rttr) {
 
@@ -65,7 +70,7 @@ public class QuesController {
 		return "redirect:/question/list"; // URL
 	}
 
-	// (570) quesController 변경 화면 처리
+	// Q&A記事の添付ファイルリストをJSON形式に読み込む
 	@GetMapping(value = "/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<QuesAttachVO>> getAttachList(Long quesNo){
@@ -74,20 +79,23 @@ public class QuesController {
 		return new ResponseEntity<>(service.getAttachList(quesNo), HttpStatus.OK);
 	}
 
-	// (239)
-
+	// Q&A記事の詳細を取得します
 	@GetMapping({"/get","modify"})
 	public void get(@RequestParam("quesNo") Long quesNo, @ModelAttribute("cri") QuesCriteria cri, Model model) {
 		log.info("/get or modify");
 		model.addAttribute("ques", service.get(quesNo));
 	}
 
-
+	/*
+	この register() メソッドは、新規登録フォームを表示するだけの役割で、処理ロジックは含まれていません。
+	Spring MVCのビュー解決規則により、/question/register.jsp が自動的に表示されます。 
+	*/
 	@GetMapping("/register")
 	public void register() {
 
 	}
 
+	// Q&A記事を更新します
 	@PostMapping("/modify")
 	public String modify(QuesVO ques, @ModelAttribute("cri") QuesCriteria cri, RedirectAttributes rttr) {
 
@@ -100,7 +108,7 @@ public class QuesController {
 		return "redirect:/question/list" + cri.getListLink(); // URL
 	}
 
-
+	// Q&A記事を削除します
 	@PostMapping("/remove")
 	public String remove(@RequestParam("quesNo") Long quesNo, QuesCriteria cri, RedirectAttributes rttr) {
 
@@ -119,7 +127,8 @@ public class QuesController {
 
 		return "redirect:/question/list" + cri.getListLink(); // URL
 	}
-
+	
+	// Q&A記事の添付ファイルを削除します
 	private void deleteFiles(List<QuesAttachVO> attachList) {
 		if(attachList == null || attachList.size() == 0) {
 			return;

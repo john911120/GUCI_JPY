@@ -10,31 +10,35 @@ import lombok.ToString;
 @Setter
 @ToString
 public class QuesCriteria {
-// 293 페이징 처리(Processing DTO)
-	private int pageNum; // 페이지 번호
-	private int amount; // 페이지 당 게시글 갯수
+	
+	// 現在のページ番号
+	private int pageNum; 
+	
+	// 1ページあたりの表示件数
+	private int amount; 
 
-	// 검색 조건 처리를 위한 수정 및 변수 설정
+	// 検索条件の種類（例：T=タイトル、C=内容など）
 	private String type;
+	// 検索キーワード
 	private String keyword;
 
-	// 1페이지 당 10개의 게시글을 보여주겠다.
+	// Q&Aコンストラクタ（1ページ目、9件表示）
 	public QuesCriteria() {
 		this(1, 10);
 	}
 
+	// Q&Aページ番号と表示件数を指定するコンストラクタ
 	public QuesCriteria(int pageNum, int amount) {
 		this.pageNum = pageNum;
 		this.amount = amount;
 	}
 
-	// p 334
+	// typeが複数の場合に対応するため、1文字ずつの配列に分割
 	public String[] getTypeArr() {
 		return type == null ? new String[] {} : type.split("");
 	}
-	// uricomponentsbuilder 이용 링크 생성
-	// p.349
-	// (580) 게시물 삭제 후 페이지 번호 검색 조건을 유지하기 위한 코드를 체크한다.
+	
+	// 現在の検索・ページング情報を基にしたURI文字列を生成
 	public String getListLink() {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
 			.queryParam("pageNum", this.pageNum)
