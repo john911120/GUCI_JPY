@@ -58,7 +58,7 @@ public class ReviewUploadController {
 	@PostMapping("/revuploadFormAction")
 	public void uploadFormPost(MultipartFile[] uploadFile, Model model) {
 
-		String uploadFolder = "C:/GUCI/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/GUCI12/resources/review/img/";// 업로드 되는 파일 경로를 지정
+		String uploadFolder = "C:/GUCI/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/GUCI12/resources/review/img/";
 
 		for(MultipartFile multipartFile : uploadFile) {
 			log.info("--------------------------------------");
@@ -106,7 +106,7 @@ public class ReviewUploadController {
 		public ResponseEntity<List<ReviewAttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
 
 			List<ReviewAttachFileDTO> list = new ArrayList<>();
-			String uploadFolder = "C:/GUCI/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/GUCI12/resources/review/img/";// 업로드 되는 파일 경로를 지정
+			String uploadFolder = "C:/GUCI/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/GUCI12/resources/review/img/";
 
 			String uploadFolderPath = getFolder();
 
