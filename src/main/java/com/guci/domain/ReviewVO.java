@@ -7,24 +7,29 @@ import lombok.Data;
 
 @Data
 public class ReviewVO {
+	
+	// レビュー記事番号
+	private Long revNo;
 
-	private Long revNo;//글번호
+	// 商品番号
+	private Long gdsNo;
 
-	private Long gdsNo;//상품번호
+	// 商品名
+	private String gdsName;
 
-	private String gdsName;//상품명
+	// ユーザーID
+	private String userId;
 
-	private String userId;//userId
+	// レビュー内容
+	private String revCon;
 
-	private String revCon;//리뷰내용
+	// 作成日
+	private Date revDate;
 
-	private Date revDate;//작성일자
+	// レート
+	private String score;
 
-	private String score;//별점
-
+	// 添付ファイルリスト
 	private List<ReviewAttachVO> attachList;
-
-
-
 
 }

@@ -36,36 +36,28 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @AllArgsConstructor
 public class ReviewController {
-//	@Resource(name="uploadPath")
-//	private String uploadPath;
 
-	//@Setter(onMethod_=@Autowired)
+	// 商品レビュー及び添付ファイルを管理するコントローラー
 	@Autowired
 	private ReviewService service;
-
-	//@Setter(onMethod_=@Autowired)
+	
+	// 商品情報取得用サービス（レビューに商品名などを表示するため）
 	@Autowired
 	private GoodsService gService;
 
-//	@GetMapping("/product_detail")
-//	public void product_detail(Long gdsNo, Model model) {
-//		log.info("product_detail"+gdsNo);
-//
-//		model.addAttribute("product_detail", service.getList(gdsNo));
-//	}
-
+	// 商品詳細ページ：レビュー一覧 + 商品情報 + ページング情報を表示
 	@GetMapping("/product_detail")
 	public void product_detail(@RequestParam("gdsNo") Long gdsNo ,ReviewCriteria cri, Model model) throws Exception {
 		log.info("product_detail"+cri);
 		cri.setGdsNo(gdsNo);
-
 		model.addAttribute("product_detail", service.getListImgWithPaging(cri));
 		model.addAttribute("goods",gService.get_goods_detail(gdsNo));
 		int total=service.getTotal(cri);
 		log.info("total: "+total);
 		model.addAttribute("pageMaker",new ReviewPageDTO(cri, total));
 	}
-
+	
+	// レビュー登録処理（添付ファイル情報も含む）
 	@GetMapping("/register")
 	public void register(@RequestParam("gdsNo") Long gdsNo, Model model) throws Exception {
 		model.addAttribute("goods", gService.get_goods_detail(gdsNo));
@@ -79,25 +71,13 @@ public class ReviewController {
 			review.getAttachList().forEach(attach -> log.info(attach));
 		}
 		log.info("================");
-
-//		String imgUploadPath = uploadPath + File.separator + "imgUpload";
-//		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
-//		String fileName = null;
-//
-//		if(file != null) {
-//		 fileName =UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
-//		} else {
-//		 fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
-//		}
-//
-//		review.setRevImg(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
 		service.register(review);
 		service.getAttachList(review.getRevNo());
 
 		return "redirect:/review/product_detail?gdsNo="+gdsNo;
 	}
 
-	// (570) ReviewController 변경 화면 처리
+	// 添付ファイルリストをJSON形式で取得（レビュー詳細表示などに使用）
 	@GetMapping(value = "/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<ReviewAttachVO>> getAttachList(Long revNo){
@@ -113,7 +93,7 @@ public class ReviewController {
 		model.addAttribute("review",service.get(revNo));
 	}
 
-	// 상품 수정
+	// レビュー修正処理
 	@PostMapping("/modify")
 	public String modify(ReviewVO review,@RequestParam("gdsNo") Long gdsNo, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 
@@ -125,7 +105,8 @@ public class ReviewController {
 
 		return "redirect:/review/product_detail?gdsNo="+gdsNo+"&" + cri.getListLink(); // URL
 	}
-
+	
+	// レビュー削除時、ファイルも一緒に削除する処理
 	@PostMapping("/remove")
 	public String remove(@RequestParam("revNo") Long revNo,@RequestParam("gdsNo") Long gdsNo, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("remove...."+revNo);

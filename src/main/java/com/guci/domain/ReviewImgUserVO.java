@@ -7,17 +7,40 @@ import lombok.Data;
 
 @Data
 public class ReviewImgUserVO {
-	private Long revNo;//글번호
-	private Long gdsNo;//상품번호
-	private String gdsName;//상품명
 
-	private String revCon;//리뷰내용
-	private Date revDate;//작성일자
-	private String score;//별점
+	// レビュー番号（主キー）
+	private Long revNo;
+
+	// 商品番号
+	private Long gdsNo;
+
+	// 商品名
+	private String gdsName;
+
+	// レビュー内容（本文）
+	private String revCon;
+
+	// レビュー作成日
+	private Date revDate;
+
+	// レビューの評価（星の数）
+	private String score;
+
+	// 添付ファイルリスト（画像など）
 	private List<ReviewAttachVO> attachList;
 
-	private String uuid, uploadPath, fileName;
+	// 添付ファイルのUUID
+	private String uuid;
+
+	// 添付ファイルの保存パス
+	private String uploadPath;
+
+	// 添付ファイル名
+	private String fileName;
+
+	// ファイルの種類（画像かどうか）
 	private boolean fileType;
 
+	// ユーザーID（レビュー作成者）
 	private String userId;
 }
