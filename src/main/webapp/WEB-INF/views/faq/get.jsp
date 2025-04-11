@@ -59,7 +59,7 @@
           <aside class="aa-sidebar">
             <!-- single sidebar -->
             <div class="aa-sidebar-widget">
-              <h3>카테고리</h3>
+              <h3>カテゴリー</h3>
               <ul class="aa-catg-nav">
 				<li><a href="/notice/list">お知らせ</a></li>
                 <li><a href="/faq/list" class="active">FAQ</a></li>

@@ -10,6 +10,9 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class QuesReplyPageDTO {
+	// Q&Aの質問に対するコメントの数
 	private int replyCnt;
+	
+	// Q&Aの質問に対するコメントのリスト
 	private List<QuesReplyVO> list;
 }

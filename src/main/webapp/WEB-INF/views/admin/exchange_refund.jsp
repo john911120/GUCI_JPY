@@ -48,12 +48,12 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>상품명</th>
-                                    <th>사유</th>
-                                    <th>가격</th>
-                                    <th>구매자</th>
-                                    <th>구매일</th>
-                                    <th>처리상태</th>
+                                    <th>商品名</th>
+                                    <th>理由</th>
+                                    <th>価格</th>
+                                    <th>購買者</th>
+                                    <th>購買日</th>
+                                    <th>処理状態</th>
                                     <th></th>
                                 </tr>
                             </thead>
