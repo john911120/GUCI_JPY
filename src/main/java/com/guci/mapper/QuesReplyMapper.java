@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Param;
 import com.guci.domain.QuesCriteria;
 import com.guci.domain.QuesReplyVO;
 
-//(378) ReplyMapper 인터페이스 생성
 public interface QuesReplyMapper {
 
 	// Q&A記事に対するコメントを登録し、該当記事のコメント数を1増加させる
