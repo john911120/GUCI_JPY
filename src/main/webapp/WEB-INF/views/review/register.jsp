@@ -51,7 +51,7 @@
           </div>
 
           <div class="form-group">
-            <label>작성자</label> <input class="form-control" name='userId' value='<c:out value="${user.userId }"/>' readonly>
+            <label>作成者</label> <input class="form-control" name='userId' value='<c:out value="${user.userId }"/>' readonly>
           </div>
         <div class="panel panel-default">
 			<div class="panel-heading">ファイル添付</div>
