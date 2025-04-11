@@ -25,7 +25,7 @@
       <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-8 col-md-push-3">
           <div class="aa-product-catg-content">
-            <h2>공용 의류</h2>
+            <h2>共用衣類</h2>
             <div class="aa-product-catg-body">
               <ul class="aa-product-catg">
                 <c:forEach items="${unisexProduct}" var="unisexProduct">

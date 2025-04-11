@@ -65,7 +65,7 @@
                             			<td><c:out value="${goods.gdsNo }" /></td>
                             			<td><c:out value="${goods.cateName }" /></td>
                             			<td><a href='/admin/goods/get?gdsNo=<c:out value="${goods.gdsNo}"/>' style="color:#858796;"><c:out value="${goods.gdsName }" /></a></td>
-                            			<td><c:out value="${goods.gdsPrice }" />원</td>
+                            			<td><c:out value="${goods.gdsPrice }" />ウォン</td>
                             			<td><fmt:formatDate pattern="yyyy-MM-dd" value="${goods.gdsDate }"/></td>
                             		</tr>
                             	</c:forEach>

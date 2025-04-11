@@ -54,7 +54,7 @@
                     <div class="aa-price-block">
                       <label>価格 : </label><span class="aa-product-view-price"><fmt:formatNumber value="${goods.gdsPrice }" pattern="#,###" />ウォン</span>
                     </div><br>
-                    <label class="radio-inline col-sm-3 col-form-label">사이즈</label>
+                    <label class="radio-inline col-sm-3 col-form-label">サイズ</label>
                 <div class="col-sm-2">
                  <input type="radio" class="selSize" name="selSize" id="inlineRadio1" value="S" checked> S
                 </div>
@@ -135,7 +135,7 @@
                 		</form>
                 			<td><div class="inputArea">
 
-							 <img src="/resources/review/img/${review.uploadPath }/${review.uuid}_${review.fileName}" alt="이미지" style="width:100px; height:100px" class="oriImg"/>
+							 <img src="/resources/review/img/${review.uploadPath }/${review.uuid}_${review.fileName}" alt="image" style="width:100px; height:100px" class="oriImg"/>
 							 </div>
 							 </td>
                 			<td><c:out value="${review.revCon }"></c:out></td>

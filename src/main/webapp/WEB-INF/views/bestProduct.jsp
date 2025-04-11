@@ -25,7 +25,7 @@
       <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-8 col-md-push-3">
           <div class="aa-product-catg-content">
-            <h2>베스트 상품</h2>
+            <h2>ベスト商品</h2>
             <div class="aa-product-catg-body">
               <ul class="aa-product-catg">
 				<c:forEach items="${bestProduct}" var="bestProduct">

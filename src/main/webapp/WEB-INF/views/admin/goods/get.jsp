@@ -73,7 +73,7 @@
 								  </div>
 								
 								<div class="form-group col-md-12 row">
-									<label>상품설명</label> <textarea class="form-control" name="gdsDes" rows="10" readonly><c:out value="${goods.gdsDes}"/></textarea>
+									<label>商品説明</label> <textarea class="form-control" name="gdsDes" rows="10" readonly><c:out value="${goods.gdsDes}"/></textarea>
 								</div>
 												
 								<div style="float:right;">
