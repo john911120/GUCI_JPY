@@ -15,8 +15,19 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQuery�
 <li> HTML / CSS / JavaScript </li>
 <li> JQuery/ Bootstrap3.3.7 + 4 / JSP / Servlet </li>
 <li> Spring Framework5 / Spring Security </li>
-<li> Apache Tomcat 9.0 </li>
+<li> Apache Tomcat 10.1.39 </li>
 <li> JavaMailSender / HtmlEmail / BCryptPasswordEncoder(認証,暗号化)</li>
+
+<h2 align="left"><span style="color:teal;"> WASサーバー実行環境</span></h2>
+
+本プロジェクトは、ローカルの Apache Tomcat 10.1.39 を基盤にテストを実施しています。
+
+<li> Tomcat フォルダを圧縮し、`/server/apache-tomcat-10.1.39.zip` にて提供しています。
+<li> `JAVA_HOME` を設定後、`bin/startup.sh`（または `startup.bat`）にて起動可能です。
+<li> WAR ファイルは `/webapps/` フォルダに配置してください。
+
+→ WAS サーバーを直接起動し、ローカル環境での動作確認やテストが可能です。
+
 
 <h2 align="left"><span style="color:teal;">🗂 機能一覧（Main Features）</span></h2> 
 <li> ユーザー登録・ログイン機能　</li>
