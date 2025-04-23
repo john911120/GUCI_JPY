@@ -1,0 +1,29 @@
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+<!-- 
+ log4jdbc のログ出力設定
+jdbc.sqlonly     実行された SQL 文のみを出力 + ファイルに保存するための設定を追加
+jdbc.sqltiming   SQL 文 + 実行時間を出力
+jdbc.audit       コネクションの生成 / 解放ログ
+jdbc.resultset   ResultSet の操作ログ
+jdbc.connection  データベース接続 / 解放に関するログ
+-->
+  <logger name="jdbc.sqlonly" level="DEBUG">
+      <appender-ref ref="FILE" />
+      <appender-ref ref="STDOUT" />
+  </logger>
+
+  <logger name="jdbc.sqltiming" level="DEBUG"/>
+  <logger name="jdbc.audit" level="WARN"/>
+  <logger name="jdbc.resultset" level="ERROR"/>
+  <logger name="jdbc.connection" level="ERROR"/>
+
+  <root level="INFO">
+    <appender-ref ref="STDOUT"/>
+  </root>
+</configuration>
