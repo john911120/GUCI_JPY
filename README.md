@@ -15,8 +15,19 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQuery�
 <li> HTML / CSS / JavaScript </li>
 <li> JQuery/ Bootstrap3.3.7 + 4 / JSP / Servlet </li>
 <li> Spring Framework5 / Spring Security </li>
-<li> Apache Tomcat 9.0 </li>
+<li> Apache Tomcat 10.1.39 </li>
 <li> JavaMailSender / HtmlEmail / BCryptPasswordEncoder(認証,暗号化)</li>
+
+<h2 align="left"><span style="color:teal;"> WASサーバー実行環境</span></h2>
+
+本プロジェクトは、ローカルの Apache Tomcat 10.1.39 を基盤にテストを実施しています。
+
+<li> Tomcat フォルダを圧縮し、`/server/apache-tomcat-10.1.39.zip` にて提供しています。
+<li> `JAVA_HOME` を設定後、`bin/startup.sh`（または `startup.bat`）にて起動可能です。
+<li> WAR ファイルは `/webapps/` フォルダに配置してください。
+
+→ WAS サーバーを直接起動し、ローカル環境での動作確認やテストが可能です。
+
 
 <h2 align="left"><span style="color:teal;">🗂 機能一覧（Main Features）</span></h2> 
 <li> ユーザー登録・ログイン機能　</li>
@@ -87,6 +98,13 @@ Maven や Gradle などの依存関係管理ツールを使用しない環境で
 ### 🔒 セキュリティ面の強化
 - SQLインジェクションやXSS対策などの脆弱性への対応が不足しており、入力値の検証も限定的です。
 - 今後はSpring Securityや入力バリデーションを適切に実装し、より安全なサービスへと改善していく所存です。
+
+### 📋 Secure Coding 点検結果報告（令和7年4月23日時点）
+- 本プロジェクトの views ディレクトリに含まれる JSP ファイルについて、Secure Coding の観点から点検を行った結果は以下の通りです。
+- 本プロジェクトは、迅速な実装またはデモンストレーションを目的として設計されており、サーバー側でデータをあらかじめ加工し、JSP に渡す構成となっています。
+- JSP ファイル内には、ユーザー入力を直接処理するロジックや、動的なユーザー対応の処理はほとんど存在しません。
+- そのため、XSS（クロスサイトスクリプティング）やクライアント側の攻撃に対する脆弱性は低く、全体的に安全な状態であることが確認されました。
+※ 今後、ユーザー入力を扱う機能を追加する場合は、escapeHtml や c:out などによるエスケープ処理と併せて、入力バリデーションの実装が必要です。
 
 ### 🧪 テストケースの文書化
 - 単体テスト（JUnit）は実装されているものの、テスト仕様書やケース定義書の作成には至っておりません。
