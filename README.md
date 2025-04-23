@@ -15,8 +15,19 @@ Javaをベースにしたバックエンドと、HTML/CSS/JavaScript/JSP/JQuery�
 <li> HTML / CSS / JavaScript </li>
 <li> JQuery/ Bootstrap3.3.7 + 4 / JSP / Servlet </li>
 <li> Spring Framework5 / Spring Security </li>
-<li> Apache Tomcat 9.0 </li>
+<li> Apache Tomcat 10.1.39 </li>
 <li> JavaMailSender / HtmlEmail / BCryptPasswordEncoder(認証,暗号化)</li>
+
+<h2 align="left"><span style="color:teal;"> WASサーバー実行環境</span></h2>
+
+本プロジェクトは、ローカルの Apache Tomcat 10.1.39 を基盤にテストを実施しています。
+
+<li> Tomcat フォルダを圧縮し、`/server/apache-tomcat-10.1.39.zip` にて提供しています。
+<li> `JAVA_HOME` を設定後、`bin/startup.sh`（または `startup.bat`）にて起動可能です。
+<li> WAR ファイルは `/webapps/` フォルダに配置してください。
+
+→ WAS サーバーを直接起動し、ローカル環境での動作確認やテストが可能です。
+
 
 <h2 align="left"><span style="color:teal;">🗂 機能一覧（Main Features）</span></h2> 
 <li> ユーザー登録・ログイン機能　</li>
@@ -87,6 +98,50 @@ Maven や Gradle などの依存関係管理ツールを使用しない環境で
 ### 🔒 セキュリティ面の強化
 - SQLインジェクションやXSS対策などの脆弱性への対応が不足しており、入力値の検証も限定的です。
 - 今後はSpring Securityや入力バリデーションを適切に実装し、より安全なサービスへと改善していく所存です。
+
+### 📋 Secure Coding 点検結果報告（令和7年4月23日時点）
+- 本プロジェクトの views ディレクトリに含まれる JSP ファイルについて、Secure Coding の観点から点検を行った結果は以下の通りです。
+- 本プロジェクトは、迅速な実装またはデモンストレーションを目的として設計されており、サーバー側でデータをあらかじめ加工し、JSP に渡す構成となっています。
+- JSP ファイル内には、ユーザー入力を直接処理するロジックや、動的なユーザー対応の処理はほとんど存在しません。
+- そのため、XSS（クロスサイトスクリプティング）やクライアント側の攻撃に対する脆弱性は低く、全体的に安全な状態であることが確認されました。
+※ 今後、ユーザー入力を扱う機能を追加する場合は、escapeHtml や c:out などによるエスケープ処理と併せて、入力バリデーションの実装が必要です。
+
+### 📝 ログ構成のセキュリティ改善と移行について（令和7年 4月 23日）
+本プロジェクトでは、過去に log4j 1.2.17 および slf4j-log4j12 を使用してログを出力しておりましたが、
+これらのコンポーネントにおける重大な脆弱性（例：CVE-2021-44228 など）に対応するため、以下のような対策と構成変更を行いました。
+
+✅ 対応内容
+log4j, slf4j-log4j12, log4jdbc-log4j2-jdbc4 の依存関係を完全に削除
+
+ログ実装を logback-classic に変更（SLF4Jに完全対応）
+
+SQLログ用に log4jdbc-remix（SLF4Jベース）を導入
+
+logback.xml にて詳細なSQLログ出力（コンソールおよびファイル）を設定
+
+旧設定ファイル log4j.xml を削除済み
+
+📦 新しいログ構成
+
+コンポーネント	用途
+slf4j-api	ログインタフェース
+logback-classic	ログ実装（安全で拡張性あり）
+log4jdbc-remix	SQL文のログ出力（実行時間含む）
+logback.xml	ログ出力設定ファイル（src/main/resources/ 配下に配置）
+🔐 セキュリティと互換性
+この構成変更により、log4jに関連するすべての脆弱性を排除し、
+より安全かつ保守しやすいログ環境を実現しました。
+
+###📝 log4jdbc 設定ファイルの整理(令和7年 4月 23日）
+
+log4jdbc-remix の導入に伴い、既存の設定ファイル `log4jdbc.log4j2.properties` を  
+`log4jdbc-remix.properties` にリネームしました。
+
+この変更により、log4jdbc-remix における設定ファイルの自動認識が正しく機能し、  
+設定の管理やログ出力挙動の一貫性が向上しました。
+
+また、このファイル名の変更は Git 履歴上で rename として記録されており、  
+変更経緯が明確に把握できるようになっています。
 
 ### 🧪 テストケースの文書化
 - 単体テスト（JUnit）は実装されているものの、テスト仕様書やケース定義書の作成には至っておりません。

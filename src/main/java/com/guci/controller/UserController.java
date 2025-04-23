@@ -85,6 +85,7 @@ public class UserController {
 	/*
 	 メール認証コードの送信
 	 @return 認証番号（6桁のランダム数字）
+	 String setFrom = "zndn121@naver.com";
 	 */
 	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
 	@ResponseBody
@@ -92,7 +93,8 @@ public class UserController {
 		log.info("メールアドレス データ転送確認");
 		Random random = new Random();
 		int checkNum = random.nextInt(888888) + 111111;
-		String setFrom = "zndn121@naver.com";
+		// テスト用メールアドレスです。本番環境では適切なアドレスに変更してください。
+		String setFrom = "test@test.com";
 		String content = "認証番号は " + checkNum + " です。<br>認証番号を入力してください。";
 		try {
 			MimeMessage message = mailSender.createMimeMessage();

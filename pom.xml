@@ -46,6 +46,7 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${org.slf4j-version}</version>
 		</dependency>
+<!-- 		
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
@@ -58,6 +59,7 @@
 			<version>${org.slf4j-version}</version>
 			<scope>runtime</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -80,8 +82,39 @@
 					<artifactId>jmxri</artifactId>
 				</exclusion>
 			</exclusions>
-<!-- 			<scope>runtime</scope> -->
+ 			<scope>runtime</scope>
 		</dependency>
+		
+		
+		<dependency>
+		    <groupId>org.bgee.log4jdbc-log4j2</groupId>
+		    <artifactId>log4jdbc-log4j2-jdbc4</artifactId>
+		    <version>1.16</version>
+		</dependency>  
+-->		
+
+		<!-- Logging: Logback implementation (replacing log4j) -->
+		<dependency>
+		    <groupId>ch.qos.logback</groupId>
+		    <artifactId>logback-classic</artifactId>
+		    <version>1.2.11</version>
+		</dependency>
+		
+		<!-- Logging Replacement : log4jdbc-remix -->
+		<dependency>
+		    <groupId>org.lazyluke</groupId>
+		    <artifactId>log4jdbc-remix</artifactId>
+		    <version>0.2.7</version>
+		</dependency>
+				
+		<!-- 
+			Logging: log4jdbc for SQL logging (SLF4J compatible)
+		<dependency>
+		    <groupId>org.bgee.log4jdbc-log4j2</groupId>
+		    <artifactId>log4jdbc-slf4j</artifactId>
+		    <version>1.16</version>
+		</dependency>
+		 -->
 
 		<!-- @Inject -->
 		<dependency>
@@ -156,13 +189,7 @@
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-tx</artifactId>
 		    <version>${org.springframework-version}</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.bgee.log4jdbc-log4j2</groupId>
-		    <artifactId>log4jdbc-log4j2-jdbc4</artifactId>
-		    <version>1.16</version>
-		</dependency>   
+		</dependency> 
 		
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
