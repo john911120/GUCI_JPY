@@ -1,4 +1,4 @@
-<h1 style="text-align: left; color: red;">★ ご案内 ★</h1>
+<h1 style="text-align: left; color: red;">**★ ご案内 ★**</h1>
 
 恐れ入りますが、本ポートフォリオは全て日本語で構成されており、  
 事前に技術背景・意図・設計概要などを詳細に記載しております。  
